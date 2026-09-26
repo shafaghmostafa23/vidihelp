@@ -25,6 +25,7 @@ function vf_admin_pages() {
 		'vf-blog-tags'     => 'blog',
 		'vf-blog-authors'  => 'blog',
 		'vf-blog-settings' => 'blog',
+		'vf-blog-landing'  => 'blog',
 	);
 }
 
@@ -121,6 +122,7 @@ function vf_admin_nav( $system ) {
 		'items' => array(
 			array( 'vf-blog', __( 'نمای کلی', 'vidiform' ), 'grid', 'edit_posts', array() ),
 			array( 'vf-blog-posts', __( 'نوشته‌ها', 'vidiform' ), 'list', 'edit_posts', array() ),
+			array( 'vf-blog-landing', __( 'صفحه بلاگ', 'vidiform' ), 'home', 'manage_categories', array() ),
 			array( 'vf-blog-cats', __( 'دسته‌بندی‌ها', 'vidiform' ), 'folder', 'manage_categories', array() ),
 			array( 'vf-blog-tags', __( 'برچسب‌ها', 'vidiform' ), 'tag', 'manage_categories', array() ),
 			array( 'vf-blog-authors', __( 'نویسندگان', 'vidiform' ), 'user', 'list_users', array() ),
@@ -235,6 +237,7 @@ function vf_admin_menus() {
 	add_submenu_page( 'vf-blog', __( 'نمای کلی وبلاگ', 'vidiform' ), __( 'نمای کلی', 'vidiform' ), 'edit_posts', 'vf-blog', 'vf_blog_page_dashboard' );
 	add_submenu_page( 'vf-blog', __( 'نوشته‌ها', 'vidiform' ), __( 'نوشته‌ها', 'vidiform' ), 'edit_posts', 'vf-blog-posts', 'vf_blog_page_posts' );
 	add_submenu_page( 'vf-blog', __( 'نوشته‌ی جدید', 'vidiform' ), __( 'نوشته‌ی جدید', 'vidiform' ), 'edit_posts', 'post-new.php' );
+	add_submenu_page( 'vf-blog', __( 'تنظیمات صفحه بلاگ', 'vidiform' ), __( 'صفحه بلاگ', 'vidiform' ), 'manage_categories', 'vf-blog-landing', 'vf_blog_page_landing' );
 	add_submenu_page( 'vf-blog', __( 'دسته‌بندی‌ها', 'vidiform' ), __( 'دسته‌بندی‌ها', 'vidiform' ), 'manage_categories', 'vf-blog-cats', 'vf_blog_page_cats' );
 	add_submenu_page( 'vf-blog', __( 'برچسب‌ها', 'vidiform' ), __( 'برچسب‌ها', 'vidiform' ), 'manage_categories', 'vf-blog-tags', 'vf_blog_page_tags' );
 	add_submenu_page( 'vf-blog', __( 'نویسندگان', 'vidiform' ), __( 'نویسندگان', 'vidiform' ), 'list_users', 'vf-blog-authors', 'vf_blog_page_authors' );

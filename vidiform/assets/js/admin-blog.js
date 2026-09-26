@@ -87,4 +87,58 @@
 			}
 		});
 	}
+
+	/* ---------- Blog landing settings («صفحه بلاگ») ---------- */
+	if (screen === 'blog-landing') {
+		var NOTES = {
+			image: 'تصویر با نسخه‌های ریسپانسیو و فرمت‌های بهینه‌ی وردپرس سرو می‌شود.',
+			video: 'ویدیوی MP4/WebM را از کتابخانه انتخاب کنید یا آدرس مستقیم ویدیو را وارد کنید؛ بی‌صدا و تکراری پخش می‌شود.',
+			vidiform: 'لینک ویدی‌فرم را در فیلد آدرس وارد کنید تا به‌صورت زنده داخل موکاپ اجرا شود. فایل انتخاب‌شده به‌عنوان تصویر جایگزین استفاده می‌شود.'
+		};
+		var typeOf = function () {
+			var r = page.querySelector('input[name="vf_blog[media_type]"]:checked');
+			return r ? r.value : 'image';
+		};
+		var syncType = function () {
+			var t = typeOf();
+			var note = page.querySelector('[data-type-note]');
+			if (note) { note.textContent = NOTES[t]; }
+			page.querySelectorAll('.vf-a-tab').forEach(function (tab) {
+				var input = tab.querySelector('input');
+				tab.classList.toggle('is-active', input.checked);
+			});
+		};
+		page.addEventListener('change', function (e) {
+			if (e.target.name === 'vf_blog[media_type]') { syncType(); }
+		});
+		syncType();
+
+		page.addEventListener('click', function (e) {
+			var pick = e.target.closest('[data-media-pick]');
+			var clear = e.target.closest('[data-media-clear]');
+			var slot = e.target.closest('[data-slot]');
+			if (!slot || (!pick && !clear)) { return; }
+			var idInput = slot.querySelector('[data-media-id]');
+			var preview = slot.querySelector('[data-media-preview]');
+			var drop = slot.querySelector('[data-media-pick]');
+			var clr = slot.querySelector('[data-media-clear]');
+			if (clear) {
+				idInput.value = '0';
+				preview.innerHTML = '';
+				drop.classList.remove('has-media');
+				clr.hidden = true;
+				return;
+			}
+			var t = typeOf();
+			A.pickMedia(t === 'video' ? 'video' : 'image', function (m) {
+				idInput.value = m.id;
+				preview.innerHTML = (m.type === 'video')
+					? '<video src="' + esc(m.url) + '" muted playsinline></video>'
+					: '<img src="' + esc(m.url) + '" alt="">';
+				drop.classList.add('has-media');
+				clr.hidden = false;
+				VF.toast('فایل انتخاب شد؛ برای اعمال، تنظیمات را ذخیره کنید.');
+			});
+		});
+	}
 })();

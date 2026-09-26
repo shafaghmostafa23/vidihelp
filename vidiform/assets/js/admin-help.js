@@ -308,7 +308,7 @@
 			for (var i = 0; i < S.features.length; i++) { if (S.features[i].id === id) { return S.features[i].name; } }
 			return 'بدون ویژگی';
 		}
-		function guideTitle(id) { var g = guideById(id); return g ? g.title : ''; }
+		function guideTitle(id) { var g = guideById(id); return g ? g.title : (typeof titleCache !== 'undefined' && titleCache[id]) || ''; }
 
 		function chip(label, active, attrs) {
 			return '<button type="button" class="vf-a-chip' + (active ? ' is-active' : '') + '" aria-pressed="' + (active ? 'true' : 'false') + '" ' + attrs + '>' + esc(label) + '</button>';
@@ -325,7 +325,7 @@
 				'<div class="vf-a-sec__body">' +
 				'<input class="vf-a-input vf-a-input--bold" placeholder="عنوان بخش (اختیاری)" aria-label="عنوان بخش" data-s="' + i + '" data-k="title" value="' + esc(x.title) + '">' +
 				'<textarea class="vf-a-textarea" rows="3" placeholder="متن بخش" aria-label="متن بخش" data-s="' + i + '" data-k="desc">' + esc(x.desc) + '</textarea>' +
-				'<div class="vf-a-sec__tools"><button type="button" class="vf-a-dashed-btn" data-insert-ref="' + i + '">+ لینک درون‌متنی به راهنما</button><span class="vf-a-tiny">قالب: [[متن لینک|شناسه راهنما]] · پاراگراف‌ها با یک خط خالی جدا می‌شوند.</span></div>' +
+				'<div class="vf-a-sec__tools"><button type="button" class="vf-a-dashed-btn" data-insert-ref="' + i + '">+ افزودن راهنما به متن</button><span class="vf-a-tiny">قالب: [[متن لینک|شناسه راهنما]] · پاراگراف‌ها با یک خط خالی جدا می‌شوند.</span></div>' +
 
 				'<div class="vf-a-box vf-a-box--dashed"><div class="vf-a-box__title">مدیا</div>' +
 				(media ? '<div class="vf-a-media"><span class="vf-a-media__type">' + mediaLabel + '</span><span class="vf-a-media__name" dir="ltr">' + esc(media.name || ('#' + media.id)) + '</span><button type="button" class="vf-a-x" data-media-clear="' + i + '" aria-label="حذف مدیا">×</button></div>' : '') +
@@ -457,8 +457,84 @@
 			});
 		}
 
-		function guideItems() {
-			return S.guides.filter(function (g) { return g.id !== G.id; }).map(function (g) { return { id: g.id, name: g.title, desc: g.status === 'publish' ? '' : (T[g.status] || g.status) }; });
+		/* Guide picker backed by the server search (vidiform/v1/help/guides/search): searches the
+		 * real guides in WordPress by title, body, excerpt, slug and section text. */
+		var titleCache = {};
+		S.guides.forEach(function (g) { titleCache[g.id] = g.title; });
+
+		function guideSearchModal(title, onPick, intro) {
+			A.modal(title,
+				(intro || '') +
+				'<div class="vf-a-search vf-a-search--modal">' +
+				'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>' +
+				'<input class="vf-a-input" type="search" placeholder="عنوان یا بخشی از متن راهنما را بنویسید…" data-q data-autofocus aria-label="جست‌وجوی راهنما" autocomplete="off">' +
+				'<span class="vf-a-spin" data-spin hidden></span></div>' +
+				'<p class="vf-a-note vf-a-note--status" data-status role="status" aria-live="polite"></p>' +
+				'<div class="vf-a-options" data-list role="listbox" aria-label="نتایج"></div>',
+				function (body, close) {
+					var q = body.querySelector('[data-q]');
+					var list = body.querySelector('[data-list]');
+					var status = body.querySelector('[data-status]');
+					var spin = body.querySelector('[data-spin]');
+					var timer = null, ctrl = null, seq = 0;
+					var ST = { publish: '', draft: 'پیش‌نویس', pending: 'در انتظار بازبینی', private: 'خصوصی', future: 'زمان‌بندی‌شده' };
+
+					function draw(items, query) {
+						status.textContent = query ? (items.length ? fa(items.length) + ' نتیجه' : '') : 'راهنماهای اخیر';
+						if (!items.length) {
+							list.innerHTML = '<div class="vf-a-empty vf-a-empty--sm"><p class="vf-a-empty__title">نتیجه‌ای پیدا نشد</p><p class="vf-a-empty__desc">عبارت دیگری از عنوان یا متن راهنما را امتحان کنید.</p></div>';
+							return;
+						}
+						list.innerHTML = items.map(function (it) {
+							titleCache[it.id] = it.title;
+							var meta = [it.category, ST[it.status]].filter(Boolean).join(' · ');
+							return '<button type="button" class="vf-a-option" role="option" data-id="' + it.id + '" data-title="' + esc(it.title) + '" data-url="' + esc(it.url) + '">' +
+								'<span class="vf-a-option__name">' + esc(it.title) + '</span>' +
+								(meta ? '<span class="vf-a-option__meta">' + esc(meta) + '</span>' : '') +
+								(it.snippet ? '<span class="vf-a-option__desc">' + esc(it.snippet) + '</span>' : '') +
+								'</button>';
+						}).join('');
+					}
+
+					function run() {
+						var query = q.value.trim();
+						if (ctrl) { ctrl.abort(); }
+						ctrl = window.AbortController ? new AbortController() : null;
+						var my = ++seq;
+						spin.hidden = false;
+						status.textContent = 'در حال جست‌وجو…';
+						var url = window.VF_ADMIN.rest.replace(/\/$/, '') + '/vidiform/v1/help/guides/search?exclude=' + G.id + '&q=' + encodeURIComponent(query);
+						fetch(url, { credentials: 'same-origin', headers: { 'X-WP-Nonce': window.VF_ADMIN.nonce }, signal: ctrl ? ctrl.signal : undefined })
+							.then(function (r) { if (!r.ok) { throw new Error(r.status); } return r.json(); })
+							.then(function (d) { if (my === seq) { draw(d.items || [], query); } })
+							.catch(function (err) {
+								if (err && err.name === 'AbortError') { return; }
+								status.textContent = '';
+								list.innerHTML = '<div class="vf-a-empty vf-a-empty--sm"><p class="vf-a-empty__title">جست‌وجو انجام نشد</p><p class="vf-a-empty__desc">اتصال یا دسترسی را بررسی کنید.</p><button type="button" class="vf-btn vf-btn--secondary vf-btn--xs" data-retry>تلاش دوباره</button></div>';
+							})
+							.then(function () { if (my === seq) { spin.hidden = true; } });
+					}
+
+					q.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 280); });
+					q.addEventListener('keydown', function (e) {
+						if (e.key === 'Enter') { e.preventDefault(); clearTimeout(timer); run(); }
+						if (e.key === 'ArrowDown') { var f = list.querySelector('[data-id]'); if (f) { e.preventDefault(); f.focus(); } }
+					});
+					list.addEventListener('keydown', function (e) {
+						var cur = e.target.closest('[data-id]');
+						if (!cur) { return; }
+						if (e.key === 'ArrowDown' && cur.nextElementSibling) { e.preventDefault(); cur.nextElementSibling.focus(); }
+						if (e.key === 'ArrowUp') { e.preventDefault(); (cur.previousElementSibling || q).focus(); }
+					});
+					list.addEventListener('click', function (e) {
+						if (e.target.closest('[data-retry]')) { run(); return; }
+						var b = e.target.closest('[data-id]');
+						if (!b) { return; }
+						close();
+						onPick({ id: parseInt(b.getAttribute('data-id'), 10), title: b.getAttribute('data-title'), url: b.getAttribute('data-url') });
+					});
+					run();
+				});
 		}
 
 		function featurePicker(i) {
@@ -569,15 +645,15 @@
 			if (t.hasAttribute('data-feature-pick')) { featurePicker(+t.getAttribute('data-feature-pick')); return; }
 			if (t.hasAttribute('data-inline-add')) {
 				var ii = +t.getAttribute('data-inline-add');
-				pickerModal('انتخاب راهنمای مرتبط', guideItems(), function (id) {
-					G.sections[ii].inline = { label: G.sections[ii].inline && G.sections[ii].inline.label ? G.sections[ii].inline.label : 'راهنمای مرتبط', guide: id };
-					setDirty(true); render();
+				guideSearchModal('انتخاب راهنمای مرتبط', function (g) {
+					G.sections[ii].inline = { label: G.sections[ii].inline && G.sections[ii].inline.label ? G.sections[ii].inline.label : g.title, guide: g.id };
+					setDirty(true); render(); VF.toast('راهنمای مرتبط به بخش اضافه شد.');
 				});
 				return;
 			}
 			if (t.hasAttribute('data-inline-pick')) {
 				var ip = +t.getAttribute('data-inline-pick');
-				pickerModal('انتخاب راهنمای مرتبط', guideItems(), function (id) { G.sections[ip].inline.guide = id; setDirty(true); render(); });
+				guideSearchModal('انتخاب راهنمای مرتبط', function (g) { G.sections[ip].inline.guide = g.id; setDirty(true); render(); });
 				return;
 			}
 			if (t.hasAttribute('data-inline-del')) { G.sections[+t.getAttribute('data-inline-del')].inline = null; setDirty(true); render(); return; }
@@ -586,12 +662,15 @@
 				var ta = root.querySelector('textarea[data-s="' + ri + '"][data-k="desc"]');
 				var start = ta.selectionStart, end = ta.selectionEnd;
 				var sel = ta.value.slice(start, end);
-				pickerModal('لینک درون‌متنی به راهنما', guideItems(), function (id) {
-					var label = (sel || guideTitle(id)).replace(/[\[\]|]/g, '');
-					var token = '[[' + label + '|' + id + ']]';
+				guideSearchModal('افزودن راهنما به متن', function (g) {
+					var label = (sel || g.title).replace(/[\[\]|]/g, '').trim();
+					var token = '[[' + label + '|' + g.id + ']]';
 					G.sections[ri].desc = ta.value.slice(0, start) + token + ta.value.slice(end);
 					setDirty(true); render();
-				});
+					var nta = root.querySelector('textarea[data-s="' + ri + '"][data-k="desc"]');
+					if (nta) { nta.focus(); nta.setSelectionRange(start + token.length, start + token.length); }
+					VF.toast('لینک «' + g.title + '» در متن درج شد؛ در صفحه‌ی کاربر به آدرس همین راهنما لینک می‌شود.');
+				}, sel ? '<p class="vf-a-note">متن انتخاب‌شده «' + esc(sel) + '» به راهنمای انتخابی لینک می‌شود.</p>' : '<p class="vf-a-note">اگر پیش از باز کردن این پنجره بخشی از متن را انتخاب کنید، همان متن به راهنما لینک می‌شود.</p>');
 			}
 		});
 

@@ -257,3 +257,135 @@ function vf_localize_pagination( $html ) {
 	}, $html ) : $html;
 }
 add_filter( 'paginate_links_output', 'vf_localize_pagination' );
+
+/**
+ * Image block for landing cards (featured image or the reference's dashed placeholder).
+ *
+ * @param WP_Post $post  Post.
+ * @param string  $size  Image size.
+ * @param string  $class Wrapper class.
+ */
+function vf_card_media( $post, $size, $class ) {
+	echo '<a class="' . esc_attr( $class ) . '" href="' . esc_url( get_permalink( $post ) ) . '" tabindex="-1" aria-hidden="true">';
+	if ( has_post_thumbnail( $post ) ) {
+		echo get_the_post_thumbnail( $post, $size, array( 'loading' => 'lazy', 'decoding' => 'async', 'alt' => '' ) );
+	} else {
+		echo '<span class="vf-ph">' . vf_icon( 'image', 26, array( 'stroke-width' => '1.5' ) ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
+	}
+	echo '</a>';
+}
+
+/**
+ * Article tile (landing grid, archives, search, related).
+ *
+ * @param WP_Post|int $post  Post.
+ * @param int         $level Heading level.
+ */
+function vf_post_tile( $post, $level = 3 ) {
+	$post = get_post( $post );
+	if ( ! $post ) {
+		return;
+	}
+	$cat = vf_post_primary_cat( $post->ID );
+	$tag = 'h' . vf_clamp_int( $level, 2, 4 );
+	?>
+	<article class="vf-tile">
+		<?php vf_card_media( $post, 'vf-card', 'vf-tile__media' ); ?>
+		<div class="vf-tile__body">
+			<div class="vf-tile__top">
+				<?php if ( $cat ) : ?>
+					<a class="vf-tag" href="<?php echo esc_url( get_category_link( $cat ) ); ?>"><?php echo esc_html( $cat->name ); ?></a>
+				<?php endif; ?>
+				<span class="vf-tile__read"><?php echo esc_html( sprintf( /* translators: %s minutes */ __( '%s مطالعه', 'vidiform' ), vf_minutes_label( vf_post_minutes( $post ) ) ) ); ?></span>
+			</div>
+			<<?php echo esc_html( $tag ); ?> class="vf-tile__title"><a href="<?php echo esc_url( get_permalink( $post ) ); ?>"><?php echo esc_html( get_the_title( $post ) ); ?></a></<?php echo esc_html( $tag ); ?>>
+			<p class="vf-tile__excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt( $post ), 26 ) ); ?></p>
+			<div class="vf-tile__foot">
+				<a href="<?php echo esc_url( get_author_posts_url( (int) $post->post_author ) ); ?>"><?php echo esc_html( get_the_author_meta( 'display_name', (int) $post->post_author ) ); ?></a>
+				<span aria-hidden="true">·</span>
+				<time datetime="<?php echo esc_attr( get_the_date( 'c', $post ) ); ?>"><?php echo esc_html( vf_post_date( $post ) ); ?></time>
+			</div>
+		</div>
+	</article>
+	<?php
+}
+
+/**
+ * Wide featured article card (Blog landing).
+ *
+ * @param WP_Post $post Post.
+ */
+function vf_post_feature( $post ) {
+	$cat = vf_post_primary_cat( $post->ID );
+	?>
+	<article class="vf-feature">
+		<div class="vf-feature__body">
+			<div class="vf-tile__top">
+				<?php if ( $cat ) : ?>
+					<a class="vf-tag" href="<?php echo esc_url( get_category_link( $cat ) ); ?>"><?php echo esc_html( $cat->name ); ?></a>
+				<?php endif; ?>
+				<span class="vf-tile__read"><?php esc_html_e( 'مقاله ویژه', 'vidiform' ); ?></span>
+			</div>
+			<h3 class="vf-feature__title"><a href="<?php echo esc_url( get_permalink( $post ) ); ?>"><?php echo esc_html( get_the_title( $post ) ); ?></a></h3>
+			<p class="vf-feature__excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt( $post ), 40 ) ); ?></p>
+			<div class="vf-tile__foot vf-feature__foot">
+				<a href="<?php echo esc_url( get_author_posts_url( (int) $post->post_author ) ); ?>"><?php echo esc_html( get_the_author_meta( 'display_name', (int) $post->post_author ) ); ?></a>
+				<span aria-hidden="true">·</span>
+				<time datetime="<?php echo esc_attr( get_the_date( 'c', $post ) ); ?>"><?php echo esc_html( vf_post_date( $post ) ); ?></time>
+				<span aria-hidden="true">·</span>
+				<span><?php echo esc_html( sprintf( /* translators: %s minutes */ __( '%s مطالعه', 'vidiform' ), vf_minutes_label( vf_post_minutes( $post ) ) ) ); ?></span>
+			</div>
+		</div>
+		<?php vf_card_media( $post, 'vf-hero', 'vf-feature__media' ); ?>
+	</article>
+	<?php
+}
+
+/**
+ * Hero media for one mockup screen (desktop laptop or mobile phone), read from «صفحه بلاگ».
+ *
+ * @param string $slot desktop|mobile.
+ */
+function vf_blog_hero_screen( $slot ) {
+	$type = vf_opt( 'blog', 'media_type', 'image' );
+	$att  = (int) vf_opt( 'blog', 'media_' . $slot, 0 );
+	$url  = (string) vf_opt( 'blog', 'media_' . $slot . '_url', '' );
+	$size = 'desktop' === $slot ? 'full' : 'large';
+	$alt  = 'desktop' === $slot ? __( 'نمای دسکتاپ ویدی‌فرم', 'vidiform' ) : __( 'نمای موبایل ویدی‌فرم', 'vidiform' );
+
+	if ( 'vidiform' === $type && $url ) {
+		printf( '<iframe src="%1$s" title="%2$s" loading="lazy" allow="camera; microphone; autoplay; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>', esc_url( $url ), esc_attr( $alt ) );
+		return;
+	}
+	if ( 'video' === $type ) {
+		$src = $url ? $url : ( $att ? (string) wp_get_attachment_url( $att ) : '' );
+		if ( $src ) {
+			printf( '<video src="%1$s" autoplay muted loop playsinline preload="metadata" aria-label="%2$s"></video>', esc_url( $src ), esc_attr( $alt ) );
+			return;
+		}
+	}
+	if ( $att && wp_attachment_is_image( $att ) ) {
+		echo wp_get_attachment_image( $att, $size, false, array(
+			'alt'           => trim( (string) get_post_meta( $att, '_wp_attachment_image_alt', true ) ) ? trim( (string) get_post_meta( $att, '_wp_attachment_image_alt', true ) ) : $alt,
+			'loading'       => 'eager',
+			'fetchpriority' => 'desktop' === $slot ? 'high' : 'auto',
+			'sizes'         => 'desktop' === $slot ? '(max-width: 900px) 92vw, 620px' : '160px',
+		) );
+		return;
+	}
+	echo '<span class="vf-ph">' . vf_icon( 'image', 'desktop' === $slot ? 30 : 22, array( 'stroke-width' => '1.5' ) ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
+}
+
+/**
+ * Safe URL for a configurable button: in-page anchors stay as is.
+ *
+ * @param string $url URL.
+ * @return string
+ */
+function vf_button_url( $url ) {
+	$url = (string) $url;
+	if ( '' !== $url && '#' === $url[0] ) {
+		return '#' . sanitize_title( substr( $url, 1 ) );
+	}
+	return esc_url( $url );
+}

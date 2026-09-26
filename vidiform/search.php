@@ -33,11 +33,11 @@ $vf_q = get_search_query( false );
 				echo esc_html( sprintf( __( '%s نتیجه', 'vidiform' ), vf_num( (int) $wp_query->found_posts ) ) );
 				?>
 			</p>
-			<div class="vf-post-grid">
+			<div class="vf-tiles">
 				<?php
 				while ( have_posts() ) :
 					the_post();
-					vf_post_card( get_post(), 'card', 2 );
+					vf_post_tile( get_post(), 2 );
 				endwhile;
 				?>
 			</div>

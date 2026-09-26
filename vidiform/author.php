@@ -45,11 +45,11 @@ $vf_site   = get_the_author_meta( 'user_url', $vf_id );
 			echo esc_html( sprintf( __( 'نوشته‌های %s', 'vidiform' ), get_the_author_meta( 'display_name', $vf_id ) ) );
 			?>
 		</h2>
-		<div class="vf-post-grid">
+		<div class="vf-tiles">
 			<?php
 			while ( have_posts() ) :
 				the_post();
-				vf_post_card( get_post(), 'card', 3 );
+				vf_post_tile( get_post(), 3 );
 			endwhile;
 			?>
 		</div>

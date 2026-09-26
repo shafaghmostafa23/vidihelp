@@ -56,6 +56,15 @@ function vf_help_register_rest() {
 		'callback'            => 'vf_rest_help_create_guide',
 		'permission_callback' => $can_edit,
 	) );
+	register_rest_route( $ns, '/help/guides/search', array(
+		'methods'             => WP_REST_Server::READABLE,
+		'callback'            => 'vf_rest_help_admin_search',
+		'permission_callback' => $can_edit,
+		'args'                => array(
+			'q'       => array( 'type' => 'string', 'default' => '', 'sanitize_callback' => 'sanitize_text_field' ),
+			'exclude' => array( 'type' => 'integer', 'default' => 0, 'sanitize_callback' => 'absint' ),
+		),
+	) );
 	register_rest_route( $ns, '/help/guides/order', array(
 		'methods'             => WP_REST_Server::CREATABLE,
 		'callback'            => 'vf_rest_help_order_guides',
@@ -174,6 +183,185 @@ function vf_rest_help_search( $req ) {
 	$res = rest_ensure_response( array( 'items' => $items ) );
 	$res->header( 'Cache-Control', 'public, max-age=60' );
 	return $res;
+}
+
+/* -------------------------------------------------------------------------
+ * Admin guide search (used by «لینک درون‌متنی به راهنما» and «راهنمای درون‌متنی»)
+ * ---------------------------------------------------------------------- */
+
+/**
+ * GET /help/guides/search?q=&exclude= — searches the real guides stored in WordPress
+ * (title, body/post_content, excerpt, slug and section text in _vf_sections), all
+ * editable statuses, with Persian/Arabic letter and half-space normalization.
+ *
+ * @param WP_REST_Request $req Request.
+ * @return WP_REST_Response
+ */
+function vf_rest_help_admin_search( $req ) {
+	$q       = trim( (string) $req['q'] );
+	$exclude = (int) $req['exclude'];
+	if ( mb_strlen( $q ) > 120 ) {
+		$q = mb_substr( $q, 0, 120 );
+	}
+	$ids   = '' === $q ? vf_help_recent_guide_ids( 20, $exclude ) : vf_help_search_guide_ids( $q, 20, $exclude );
+	$items = array();
+	if ( $ids ) {
+		_prime_post_caches( $ids, true, false );
+		foreach ( $ids as $id ) {
+			$p = get_post( $id );
+			if ( ! $p || ! current_user_can( 'edit_post', $p->ID ) ) {
+				continue;
+			}
+			$term    = vf_guide_term( $p->ID );
+			$items[] = array(
+				'id'       => (int) $p->ID,
+				'title'    => html_entity_decode( get_the_title( $p ), ENT_QUOTES, 'UTF-8' ),
+				'status'   => $p->post_status,
+				'category' => $term ? $term->name : '',
+				'url'      => 'publish' === $p->post_status ? get_permalink( $p ) : get_preview_post_link( $p ),
+				'snippet'  => vf_help_search_snippet( $p, $q ),
+			);
+		}
+	}
+	return rest_ensure_response( array( 'items' => $items ) );
+}
+
+/**
+ * Normalize Persian text for matching: Arabic ي/ك → Persian ی/ک, half-space → space,
+ * Latin digits → Persian digits, collapsed whitespace.
+ *
+ * @param string $s Text.
+ * @return string
+ */
+function vf_fa_normalize( $s ) {
+	$s = strtr( (string) $s, array(
+		'ي' => 'ی', 'ى' => 'ی', 'ك' => 'ک', 'ة' => 'ه', 'ۀ' => 'ه',
+		"\u{200C}" => ' ', "\u{200F}" => '', "\u{200E}" => '',
+	) );
+	$s = vf_fa_digits( $s );
+	return trim( preg_replace( '/\s+/u', ' ', $s ) );
+}
+
+/**
+ * Ids of the most recently modified guides (empty search).
+ *
+ * @param int $limit   Limit.
+ * @param int $exclude Guide to exclude.
+ * @return int[]
+ */
+function vf_help_recent_guide_ids( $limit, $exclude ) {
+	return array_map( 'intval', get_posts( array(
+		'post_type'     => 'help_article',
+		'post_status'   => array( 'publish', 'draft', 'pending', 'private', 'future' ),
+		'numberposts'   => $limit,
+		'orderby'       => 'modified',
+		'order'         => 'DESC',
+		'exclude'       => $exclude ? array( $exclude ) : array(),
+		'fields'        => 'ids',
+		'no_found_rows' => true,
+	) ) );
+}
+
+/**
+ * Search guide ids. Every word must match (in any field); results are ranked in PHP.
+ *
+ * @param string $q       Query.
+ * @param int    $limit   Limit.
+ * @param int    $exclude Guide to exclude.
+ * @return int[]
+ */
+function vf_help_search_guide_ids( $q, $limit, $exclude ) {
+	global $wpdb;
+	$norm  = vf_fa_normalize( $q );
+	$words = array_slice( array_values( array_filter( explode( ' ', $norm ), function ( $w ) {
+		return mb_strlen( $w ) >= 1;
+	} ) ), 0, 6 );
+	if ( ! $words ) {
+		return array();
+	}
+	$zwnj  = "\u{200C}";
+	$where = array();
+	$args  = array();
+	foreach ( $words as $w ) {
+		// Match the Persian form, the Arabic-letter form and the Latin-digit form of each word.
+		$variants = array_unique( array(
+			$w,
+			strtr( $w, array( 'ی' => 'ي', 'ک' => 'ك' ) ),
+			vf_en_digits( $w ),
+		) );
+		$ors = array();
+		foreach ( $variants as $v ) {
+			$like   = '%' . $wpdb->esc_like( $v ) . '%';
+			$ors[]  = "REPLACE(p.post_title, %s, '') LIKE %s OR REPLACE(p.post_content, %s, '') LIKE %s OR REPLACE(p.post_excerpt, %s, '') LIKE %s OR REPLACE(m.meta_value, %s, '') LIKE %s";
+			$args   = array_merge( $args, array( $zwnj, $like, $zwnj, $like, $zwnj, $like, $zwnj, $like ) );
+			$ors[]  = 'p.post_name LIKE %s';
+			$args[] = '%' . $wpdb->esc_like( strtolower( rawurlencode( $v ) ) ) . '%';
+		}
+		$where[] = '(' . implode( ' OR ', $ors ) . ')';
+	}
+	$sql = "SELECT DISTINCT p.ID, p.post_title, p.post_excerpt, p.menu_order FROM {$wpdb->posts} p
+		LEFT JOIN {$wpdb->postmeta} m ON m.post_id = p.ID AND m.meta_key = '_vf_sections'
+		WHERE p.post_type = 'help_article'
+		AND p.post_status IN ('publish','draft','pending','private','future')
+		AND p.ID <> %d
+		AND " . implode( ' AND ', $where ) . '
+		LIMIT 200';
+	array_unshift( $args, (int) $exclude );
+	$rows = $wpdb->get_results( $wpdb->prepare( $sql, $args ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+
+	// Rank: whole phrase in title > all words in title > excerpt > body.
+	$phrase = str_replace( ' ', '', $norm );
+	$scored = array();
+	foreach ( (array) $rows as $r ) {
+		$title = str_replace( ' ', '', vf_fa_normalize( $r->post_title ) );
+		$score = 0;
+		if ( false !== mb_strpos( $title, $phrase ) ) {
+			$score += 100;
+		}
+		foreach ( $words as $w ) {
+			if ( false !== mb_strpos( $title, $w ) ) {
+				$score += 10;
+			}
+			if ( false !== mb_strpos( vf_fa_normalize( $r->post_excerpt ), $w ) ) {
+				$score += 3;
+			}
+		}
+		$scored[] = array( (int) $r->ID, $score, (int) $r->menu_order );
+	}
+	usort( $scored, function ( $a, $b ) {
+		return $b[1] === $a[1] ? $a[2] - $b[2] : $b[1] - $a[1];
+	} );
+	return array_slice( array_column( $scored, 0 ), 0, $limit );
+}
+
+/**
+ * Short text around the first match (or the excerpt).
+ *
+ * @param WP_Post $p Post.
+ * @param string  $q Query.
+ * @return string
+ */
+function vf_help_search_snippet( $p, $q ) {
+	$text = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( $p->post_excerpt ? $p->post_excerpt . ' ' . $p->post_content : $p->post_content ) ) );
+	$text = preg_replace( '/\[\[([^|\]]+)\|\d+\]\]/u', '$1', $text );
+	if ( '' === $q ) {
+		return wp_html_excerpt( $text, 110, '…' );
+	}
+	$norm  = vf_fa_normalize( $text );
+	$words = explode( ' ', vf_fa_normalize( $q ) );
+	$pos   = false;
+	foreach ( $words as $w ) {
+		$pos = '' !== $w ? mb_strpos( $norm, $w ) : false;
+		if ( false !== $pos ) {
+			break;
+		}
+	}
+	// Show the original spelling when normalization kept character positions aligned.
+	$src = mb_strlen( $norm ) === mb_strlen( $text ) ? $text : $norm;
+	if ( false === $pos || $pos < 40 ) {
+		return wp_html_excerpt( $src, 110, '…' );
+	}
+	return '…' . mb_substr( $src, $pos - 40, 110 ) . '…';
 }
 
 /* -------------------------------------------------------------------------

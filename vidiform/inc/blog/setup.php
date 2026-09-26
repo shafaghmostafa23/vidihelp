@@ -178,6 +178,24 @@ function vf_blog_pre_get_posts( $q ) {
 	}
 	if ( $q->is_home() || $q->is_category() || $q->is_tag() || $q->is_author() || $q->is_date() ) {
 		$q->set( 'post_type', 'post' );
+		$q->set( 'posts_per_page', (int) vf_opt( 'blog', 'per_page', 6 ) );
+	}
+	// Blog landing (/blog/): ordering, category filter and the featured article from «صفحه بلاگ».
+	if ( $q->is_home() ) {
+		$orders = vf_blog_order_options();
+		$order  = $orders[ vf_opt( 'blog', 'order', 'date_desc' ) ] ?? $orders['date_desc'];
+		$q->set( 'orderby', $order[0] );
+		$q->set( 'order', $order[1] );
+		$q->set( 'ignore_sticky_posts', true );
+		$cats = array_filter( array_map( 'absint', (array) vf_opt( 'blog', 'latest_cats', array() ) ) );
+		if ( $cats ) {
+			$q->set( 'category__in', $cats );
+		}
+		$featured = vf_blog_landing_featured();
+		if ( $featured ) {
+			// Excluded on every page so pagination stays consistent.
+			$q->set( 'post__not_in', array( $featured->ID ) );
+		}
 	}
 }
 add_action( 'pre_get_posts', 'vf_blog_pre_get_posts' );
@@ -189,4 +207,45 @@ add_action( 'pre_get_posts', 'vf_blog_pre_get_posts' );
  */
 function vf_is_blog_home() {
 	return is_home();
+}
+
+/**
+ * Featured article of the Blog landing: the post chosen in «صفحه بلاگ», otherwise the latest
+ * post flagged as featured (star), otherwise the newest post. Null when disabled.
+ *
+ * @return WP_Post|null
+ */
+function vf_blog_landing_featured() {
+	global $vf_blog_featured;
+	if ( isset( $vf_blog_featured ) ) {
+		return $vf_blog_featured ? $vf_blog_featured : null;
+	}
+	$vf_blog_featured = false;
+	if ( ! vf_opt( 'blog', 'show_featured', 1 ) ) {
+		return null;
+	}
+	$picked = (int) vf_opt( 'blog', 'featured_post', 0 );
+	if ( $picked ) {
+		$p = get_post( $picked );
+		if ( $p && 'post' === $p->post_type && 'publish' === $p->post_status && ! post_password_required( $p ) ) {
+			$vf_blog_featured = $p;
+			return $p;
+		}
+	}
+	$base = array(
+		'post_type'           => 'post',
+		'post_status'         => 'publish',
+		'numberposts'         => 1,
+		'ignore_sticky_posts' => true,
+		'no_found_rows'       => true,
+		'suppress_filters'    => false,
+	);
+	$cats = array_filter( array_map( 'absint', (array) vf_opt( 'blog', 'latest_cats', array() ) ) );
+	if ( $cats ) {
+		$base['category__in'] = $cats;
+	}
+	$flagged = get_posts( array_merge( $base, array( 'meta_key' => '_vf_featured', 'meta_value' => '1' ) ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+	$list    = $flagged ? $flagged : get_posts( $base );
+	$vf_blog_featured = $list ? $list[0] : false;
+	return $vf_blog_featured ? $vf_blog_featured : null;
 }

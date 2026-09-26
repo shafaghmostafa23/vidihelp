@@ -96,10 +96,10 @@ while ( have_posts() ) :
 			?>
 			<section class="vf-blog-section vf-single__related" aria-labelledby="vf-related-posts">
 				<h2 class="vf-blog-section__title" id="vf-related-posts"><?php esc_html_e( 'نوشته‌های مرتبط', 'vidiform' ); ?></h2>
-				<div class="vf-post-grid">
+				<div class="vf-tiles">
 					<?php
 					foreach ( $vf_related as $vf_r ) {
-						vf_post_card( $vf_r, 'card', 3 );
+						vf_post_tile( $vf_r, 3 );
 					}
 					?>
 				</div>

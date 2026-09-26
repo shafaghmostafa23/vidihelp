@@ -31,7 +31,7 @@ Blog
 ## Admin sections
 
 - **مرکز راهنما**: راهنماها (grouped by category, drag & drop reorder/move, search, status filter, copy, delete) · ویرایش راهنما (category/sub-category, info, reading time, slug, status, sections editor with media/hint/feature/VidiForm/template/inline guide, SEO) · دسته‌بندی راهنما (landing texts, drag-reorder, rename, description, sub-categories, image, copy, delete) · رسانه · تنظیمات (landing, counts, default structure import).
-- **وبلاگ**: نمای کلی · نوشته‌ها (search, status/category/author filters, sort, featured star, trash) · نوشته‌ی جدید (block editor + «ویدی‌فرم — تنظیمات نوشته» box: featured, related posts, reading time, SEO) · دسته‌بندی‌ها · برچسب‌ها · نویسندگان · رسانه · تنظیمات.
+- **وبلاگ**: نمای کلی · صفحه بلاگ (landing: hero texts/buttons, desktop + mobile hero media from the Media Library or video/VidiForm URL, featured article, latest-list title/count/order/category filter, CTA, default light/dark) · نوشته‌ها (search, status/category/author filters, sort, featured star, trash) · نوشته‌ی جدید (block editor + «ویدی‌فرم — تنظیمات نوشته» box: featured, related posts, reading time, SEO) · دسته‌بندی‌ها · برچسب‌ها · نویسندگان · رسانه · تنظیمات.
 - **Settings → ویدی‌فرم** (shared): panel URL, which section `/` opens, default light/dark, Jalali dates, default OG image.
 - Role **ویراستار مرکز راهنما** can manage only the Help Center.
 
@@ -41,3 +41,11 @@ Blog
 2. Templates (قالب‌ها) are outside the Help Center scope; a guide section's template reference is stored as title + URL + description + free/premium, and opens the source's preview sheet with the live URL.
 3. The source's upload buttons use the WordPress Media Library.
 4. The site root redirects to the Help Center (or the Blog, per the setting).
+
+## Changelog
+
+### 1.1.0
+- **Blog landing (`/blog/`)** rebuilt to the VidiForm Content Hub reference: header, hero (eyebrow, title, description, two buttons, laptop + phone media), category pills, featured article, latest-articles tiles, pagination, CTA band, 4-column footer; dark (default) and light palettes; responsive.
+- **Blog admin → صفحه بلاگ**: every landing text, link, media item and list option is editable (Settings API, `vf_blog` option). Blog → تنظیمات gained header button, newsletter URL and related-posts count.
+- **Help Center fix — «افزودن راهنما به متن»**: the picker now queries the real guides through `GET vidiform/v1/help/guides/search` (admin-only). It searches title, body, excerpt, slug and section text, normalizes Arabic/Persian letters, half-spaces and digits, and has debounce, loading, empty and error states. The same search powers «راهنمای درون‌متنی».
+- Guide links are still inserted as `[[text|guideId]]`. They render as a link and popup to the real guide URL (and as `<a href>` in the saved content), so existing guides keep working.

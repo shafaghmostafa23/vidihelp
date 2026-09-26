@@ -503,37 +503,45 @@ function vf_blog_page_settings() {
 		<?php settings_errors(); ?>
 		<form class="vf-a-card vf-a-card--stack" method="post" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
 			<?php settings_fields( 'vf_blog_group' ); ?>
-			<input type="hidden" name="vf_blog[_form]" value="1">
-			<h2 class="vf-a-card__title"><?php esc_html_e( 'صفحه‌ی اصلی وبلاگ', 'vidiform' ); ?></h2>
-			<label class="vf-a-field"><?php esc_html_e( 'عنوان', 'vidiform' ); ?>
-				<input class="vf-a-input" type="text" name="vf_blog[hero_title]" value="<?php echo esc_attr( vf_opt( 'blog', 'hero_title' ) ); ?>">
-			</label>
-			<label class="vf-a-field"><?php esc_html_e( 'توضیح', 'vidiform' ); ?>
-				<textarea class="vf-a-textarea" rows="2" name="vf_blog[hero_desc]"><?php echo esc_textarea( vf_opt( 'blog', 'hero_desc' ) ); ?></textarea>
-			</label>
+			<input type="hidden" name="vf_blog[_form]" value="settings">
+			<p class="vf-a-card__hint">
+				<?php esc_html_e( 'هیرو، مدیا، مقاله‌ی ویژه، فهرست مقالات و بخش دعوت به اقدام در', 'vidiform' ); ?>
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=vf-blog-landing' ) ); ?>"><?php esc_html_e( 'صفحه بلاگ', 'vidiform' ); ?></a>
+				<?php esc_html_e( 'تنظیم می‌شوند.', 'vidiform' ); ?>
+			</p>
+			<h2 class="vf-a-card__title"><?php esc_html_e( 'هدر', 'vidiform' ); ?></h2>
 			<div class="vf-a-grid3">
-				<label class="vf-a-field"><?php esc_html_e( 'تعداد نوشته‌های ویژه', 'vidiform' ); ?>
-					<input class="vf-a-input" type="number" min="0" max="6" name="vf_blog[featured_count]" value="<?php echo esc_attr( vf_opt( 'blog', 'featured_count' ) ); ?>">
+				<label class="vf-a-field"><?php esc_html_e( 'متن دکمه‌ی هدر', 'vidiform' ); ?>
+					<input class="vf-a-input" type="text" name="vf_blog[header_cta_text]" value="<?php echo esc_attr( vf_opt( 'blog', 'header_cta_text' ) ); ?>">
 				</label>
-				<label class="vf-a-field"><?php esc_html_e( 'تعداد نوشته‌های مرتبط', 'vidiform' ); ?>
-					<input class="vf-a-input" type="number" min="0" max="12" name="vf_blog[related_count]" value="<?php echo esc_attr( vf_opt( 'blog', 'related_count' ) ); ?>">
+				<label class="vf-a-field"><?php esc_html_e( 'آدرس دکمه‌ی هدر', 'vidiform' ); ?>
+					<input class="vf-a-input vf-ltr" type="text" name="vf_blog[header_cta_url]" value="<?php echo esc_attr( vf_opt( 'blog', 'header_cta_url' ) ); ?>">
 				</label>
 			</div>
 			<p class="vf-a-card__hint">
 				<?php
 				printf(
-					/* translators: %s: link to reading settings */
-					esc_html__( 'تعداد نوشته در هر صفحه از %s تنظیم می‌شود.', 'vidiform' ),
-					'<a href="' . esc_url( admin_url( 'options-reading.php' ) ) . '">' . esc_html__( 'تنظیمات خواندن وردپرس', 'vidiform' ) . '</a>'
+					/* translators: %s: link to menus screen */
+					esc_html__( 'لینک‌های منوی هدر و ستون «محصول» فوتر از %s (جایگاه‌های «وبلاگ — منوی اصلی» و «وبلاگ — منوی فوتر») خوانده می‌شوند.', 'vidiform' ),
+					'<a href="' . esc_url( admin_url( 'nav-menus.php' ) ) . '">' . esc_html__( 'فهرست‌ها', 'vidiform' ) . '</a>'
 				);
 				?>
 			</p>
+			<div class="vf-a-grid3">
+				<label class="vf-a-field"><?php esc_html_e( 'تعداد نوشته‌های مرتبط', 'vidiform' ); ?>
+					<input class="vf-a-input" type="number" min="0" max="12" name="vf_blog[related_count]" value="<?php echo esc_attr( vf_opt( 'blog', 'related_count' ) ); ?>">
+				</label>
+			</div>
 			<h2 class="vf-a-card__title"><?php esc_html_e( 'صفحه‌ی نوشته', 'vidiform' ); ?></h2>
 			<label class="vf-a-check"><input type="checkbox" name="vf_blog[show_share]" value="1"<?php checked( vf_opt( 'blog', 'show_share' ) ); ?>> <?php esc_html_e( 'نمایش دکمه‌های اشتراک‌گذاری', 'vidiform' ); ?></label>
 			<label class="vf-a-check"><input type="checkbox" name="vf_blog[show_author]" value="1"<?php checked( vf_opt( 'blog', 'show_author' ) ); ?>> <?php esc_html_e( 'نمایش کادر نویسنده', 'vidiform' ); ?></label>
 			<h2 class="vf-a-card__title"><?php esc_html_e( 'فوتر', 'vidiform' ); ?></h2>
 			<label class="vf-a-field"><?php esc_html_e( 'متن فوتر', 'vidiform' ); ?>
 				<input class="vf-a-input" type="text" name="vf_blog[footer_text]" value="<?php echo esc_attr( vf_opt( 'blog', 'footer_text' ) ); ?>">
+			</label>
+			<label class="vf-a-field"><?php esc_html_e( 'آدرس فرم خبرنامه (اختیاری)', 'vidiform' ); ?>
+				<input class="vf-a-input vf-ltr" type="url" name="vf_blog[newsletter_url]" value="<?php echo esc_attr( vf_opt( 'blog', 'newsletter_url' ) ); ?>" placeholder="https://…">
+				<span class="vf-a-tiny"><?php esc_html_e( 'ستون «خبرنامه محتوا» فقط وقتی نمایش داده می‌شود که آدرس سرویس خبرنامه (مقصد ارسال فرم با فیلد email) وارد شده باشد.', 'vidiform' ); ?></span>
 			</label>
 			<div><button type="submit" class="vf-btn vf-btn--primary"><?php esc_html_e( 'ذخیره', 'vidiform' ); ?></button></div>
 		</form>
@@ -550,3 +558,224 @@ function vf_blog_page_settings() {
 	<?php
 	vf_admin_close();
 }
+
+/**
+ * Blog landing (/blog/) configuration — «صفحه بلاگ».
+ * Saved through the Settings API into the vf_blog option (nonce + manage_categories).
+ */
+function vf_blog_page_landing() {
+	if ( ! current_user_can( 'manage_categories' ) ) {
+		wp_die( esc_html__( 'اجازه‌ی دسترسی ندارید.', 'vidiform' ) );
+	}
+	$o = function ( $k ) {
+		return vf_opt( 'blog', $k );
+	};
+	$posts = get_posts( array(
+		'post_type'     => 'post',
+		'post_status'   => 'publish',
+		'numberposts'   => 100,
+		'no_found_rows' => true,
+	) );
+	$cats       = get_categories( array( 'hide_empty' => false ) );
+	$sel_cats   = array_map( 'absint', (array) $o( 'latest_cats' ) );
+	$media_type = $o( 'media_type' );
+	$thumb      = function ( $id ) {
+		if ( ! $id ) {
+			return '';
+		}
+		$mime = (string) get_post_mime_type( $id );
+		if ( 0 === strpos( $mime, 'image/' ) ) {
+			return '<img src="' . esc_url( (string) wp_get_attachment_image_url( $id, 'large' ) ) . '" alt="">';
+		}
+		if ( 0 === strpos( $mime, 'video/' ) ) {
+			return '<video src="' . esc_url( (string) wp_get_attachment_url( $id ) ) . '" muted playsinline></video>';
+		}
+		return '<span>' . esc_html( basename( (string) get_attached_file( $id ) ) ) . '</span>';
+	};
+	vf_admin_open( 'blog' );
+	?>
+	<form class="vf-a-page vf-a-page--wide" data-screen="blog-landing" method="post" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
+		<?php settings_fields( 'vf_blog_group' ); ?>
+		<input type="hidden" name="vf_blog[_form]" value="landing">
+
+		<div class="vf-a-head vf-a-head--bar">
+			<div class="vf-a-head__text">
+				<h1 class="vf-a-title"><?php esc_html_e( 'تنظیمات صفحه بلاگ', 'vidiform' ); ?> <span class="vf-a-title__sub"><?php esc_html_e( 'هیرو، مدیا و چیدمان فهرست', 'vidiform' ); ?></span></h1>
+			</div>
+			<div class="vf-a-btnrow">
+				<label class="vf-a-inline-field"><?php esc_html_e( 'حالت پیش‌فرض', 'vidiform' ); ?>
+					<select class="vf-a-select vf-a-select--sm" name="vf_blog[default_theme]">
+						<option value="dark"<?php selected( $o( 'default_theme' ), 'dark' ); ?>><?php esc_html_e( 'تیره', 'vidiform' ); ?></option>
+						<option value="light"<?php selected( $o( 'default_theme' ), 'light' ); ?>><?php esc_html_e( 'روشن', 'vidiform' ); ?></option>
+						<option value="system"<?php selected( $o( 'default_theme' ), 'system' ); ?>><?php esc_html_e( 'مطابق سیستم', 'vidiform' ); ?></option>
+					</select>
+				</label>
+				<a class="vf-btn vf-btn--outline" href="<?php echo esc_url( vf_blog_home_url() ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'مشاهده صفحه', 'vidiform' ); ?></a>
+				<button type="submit" class="vf-btn vf-btn--primary"><?php esc_html_e( 'ذخیره', 'vidiform' ); ?></button>
+			</div>
+		</div>
+		<?php settings_errors(); ?>
+
+		<div class="vf-a-cols">
+			<div class="vf-a-col">
+				<section class="vf-a-card">
+					<h2 class="vf-a-card__title"><?php esc_html_e( 'هیرو صفحه بلاگ', 'vidiform' ); ?></h2>
+					<div class="vf-a-stack">
+						<label class="vf-a-field"><?php esc_html_e( 'برچسب بالای عنوان (Eyebrow)', 'vidiform' ); ?>
+							<input class="vf-a-input" type="text" name="vf_blog[eyebrow]" value="<?php echo esc_attr( $o( 'eyebrow' ) ); ?>">
+						</label>
+						<label class="vf-a-field"><?php esc_html_e( 'عنوان اصلی', 'vidiform' ); ?>
+							<input class="vf-a-input vf-a-input--lg" type="text" name="vf_blog[hero_title]" value="<?php echo esc_attr( $o( 'hero_title' ) ); ?>" required>
+						</label>
+						<label class="vf-a-field"><?php esc_html_e( 'توضیح', 'vidiform' ); ?>
+							<textarea class="vf-a-textarea" rows="3" name="vf_blog[hero_desc]"><?php echo esc_textarea( $o( 'hero_desc' ) ); ?></textarea>
+						</label>
+						<div class="vf-a-grid2">
+							<label class="vf-a-field"><?php esc_html_e( 'دکمه اصلی', 'vidiform' ); ?>
+								<input class="vf-a-input" type="text" name="vf_blog[btn1_text]" value="<?php echo esc_attr( $o( 'btn1_text' ) ); ?>">
+							</label>
+							<label class="vf-a-field"><?php esc_html_e( 'آدرس دکمه اصلی', 'vidiform' ); ?>
+								<input class="vf-a-input vf-ltr" type="text" name="vf_blog[btn1_url]" value="<?php echo esc_attr( $o( 'btn1_url' ) ); ?>">
+							</label>
+							<label class="vf-a-field"><?php esc_html_e( 'دکمه دوم', 'vidiform' ); ?>
+								<input class="vf-a-input" type="text" name="vf_blog[btn2_text]" value="<?php echo esc_attr( $o( 'btn2_text' ) ); ?>">
+							</label>
+							<label class="vf-a-field"><?php esc_html_e( 'آدرس دکمه دوم', 'vidiform' ); ?>
+								<input class="vf-a-input vf-ltr" type="text" name="vf_blog[btn2_url]" value="<?php echo esc_attr( $o( 'btn2_url' ) ); ?>">
+							</label>
+						</div>
+						<p class="vf-a-tiny"><?php esc_html_e( 'برای رفتن به فهرست مقالات همین صفحه از #latest استفاده کنید. خالی گذاشتن متن یک دکمه، آن را پنهان می‌کند.', 'vidiform' ); ?></p>
+					</div>
+				</section>
+
+				<section class="vf-a-card">
+					<h2 class="vf-a-card__title"><?php esc_html_e( 'فهرست آخرین مقالات', 'vidiform' ); ?></h2>
+					<div class="vf-a-stack">
+						<label class="vf-a-field"><?php esc_html_e( 'عنوان بخش', 'vidiform' ); ?>
+							<input class="vf-a-input" type="text" name="vf_blog[latest_title]" value="<?php echo esc_attr( $o( 'latest_title' ) ); ?>">
+						</label>
+						<div class="vf-a-grid2">
+							<label class="vf-a-field"><?php esc_html_e( 'تعداد در هر صفحه', 'vidiform' ); ?>
+								<input class="vf-a-input" type="number" min="1" max="48" name="vf_blog[per_page]" value="<?php echo esc_attr( $o( 'per_page' ) ); ?>">
+							</label>
+							<label class="vf-a-field"><?php esc_html_e( 'ترتیب پیش‌فرض', 'vidiform' ); ?>
+								<select class="vf-a-select" name="vf_blog[order]">
+									<?php foreach ( vf_blog_order_options() as $k => $v ) : ?>
+										<option value="<?php echo esc_attr( $k ); ?>"<?php selected( $o( 'order' ), $k ); ?>><?php echo esc_html( $v[2] ); ?></option>
+									<?php endforeach; ?>
+								</select>
+							</label>
+						</div>
+						<label class="vf-a-toggle">
+							<input type="checkbox" name="vf_blog[show_featured]" value="1"<?php checked( $o( 'show_featured' ) ); ?>>
+							<span class="vf-a-toggle__ui" aria-hidden="true"></span>
+							<span><?php esc_html_e( 'نمایش مقاله ویژه در بالای فهرست', 'vidiform' ); ?></span>
+						</label>
+						<label class="vf-a-field"><?php esc_html_e( 'مقاله ویژه', 'vidiform' ); ?>
+							<select class="vf-a-select" name="vf_blog[featured_post]">
+								<option value="0"><?php esc_html_e( 'خودکار — آخرین نوشته‌ی ستاره‌دار، وگرنه جدیدترین نوشته', 'vidiform' ); ?></option>
+								<?php foreach ( $posts as $p ) : ?>
+									<option value="<?php echo esc_attr( $p->ID ); ?>"<?php selected( (int) $o( 'featured_post' ), (int) $p->ID ); ?>><?php echo esc_html( get_the_title( $p ) ); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</label>
+						<fieldset class="vf-a-field">
+							<legend><?php esc_html_e( 'فقط این دسته‌ها در فهرست (اختیاری)', 'vidiform' ); ?></legend>
+							<div class="vf-a-checks">
+								<?php foreach ( $cats as $c ) : ?>
+									<label class="vf-a-checkchip"><input type="checkbox" name="vf_blog[latest_cats][]" value="<?php echo esc_attr( $c->term_id ); ?>"<?php checked( in_array( (int) $c->term_id, $sel_cats, true ) ); ?>><span><?php echo esc_html( $c->name ); ?></span></label>
+								<?php endforeach; ?>
+							</div>
+						</fieldset>
+						<p class="vf-a-tiny"><?php esc_html_e( 'ناوبری دسته‌بندی‌ها و فهرست مقالات به‌صورت پویا از دسته‌ها و نوشته‌های منتشرشده خوانده می‌شوند؛ این‌جا فقط چیدمان تنظیم می‌شود.', 'vidiform' ); ?></p>
+					</div>
+				</section>
+
+				<section class="vf-a-card">
+					<h2 class="vf-a-card__title"><?php esc_html_e( 'بخش دعوت به اقدام (CTA)', 'vidiform' ); ?></h2>
+					<div class="vf-a-stack">
+						<label class="vf-a-field"><?php esc_html_e( 'عنوان', 'vidiform' ); ?>
+							<input class="vf-a-input" type="text" name="vf_blog[cta_title]" value="<?php echo esc_attr( $o( 'cta_title' ) ); ?>">
+						</label>
+						<label class="vf-a-field"><?php esc_html_e( 'توضیح', 'vidiform' ); ?>
+							<textarea class="vf-a-textarea" rows="2" name="vf_blog[cta_desc]"><?php echo esc_textarea( $o( 'cta_desc' ) ); ?></textarea>
+						</label>
+						<div class="vf-a-grid2">
+							<label class="vf-a-field"><?php esc_html_e( 'متن دکمه', 'vidiform' ); ?>
+								<input class="vf-a-input" type="text" name="vf_blog[cta_btn1_text]" value="<?php echo esc_attr( $o( 'cta_btn1_text' ) ); ?>">
+							</label>
+							<label class="vf-a-field"><?php esc_html_e( 'آدرس دکمه', 'vidiform' ); ?>
+								<input class="vf-a-input vf-ltr" type="text" name="vf_blog[cta_btn1_url]" value="<?php echo esc_attr( $o( 'cta_btn1_url' ) ); ?>">
+							</label>
+							<label class="vf-a-field"><?php esc_html_e( 'دکمه دوم (اختیاری)', 'vidiform' ); ?>
+								<input class="vf-a-input" type="text" name="vf_blog[cta_btn2_text]" value="<?php echo esc_attr( $o( 'cta_btn2_text' ) ); ?>">
+							</label>
+							<label class="vf-a-field"><?php esc_html_e( 'آدرس دکمه دوم', 'vidiform' ); ?>
+								<input class="vf-a-input vf-ltr" type="text" name="vf_blog[cta_btn2_url]" value="<?php echo esc_attr( $o( 'cta_btn2_url' ) ); ?>">
+							</label>
+						</div>
+						<p class="vf-a-tiny"><?php esc_html_e( 'اگر عنوان خالی باشد، این بخش نمایش داده نمی‌شود.', 'vidiform' ); ?></p>
+					</div>
+				</section>
+			</div>
+
+			<div class="vf-a-col">
+				<section class="vf-a-card" data-media-card>
+					<h2 class="vf-a-card__title"><?php esc_html_e( 'مدیای هیرو', 'vidiform' ); ?></h2>
+					<div class="vf-a-tabs" role="radiogroup" aria-label="<?php esc_attr_e( 'نوع مدیا', 'vidiform' ); ?>">
+						<?php
+						foreach ( array( 'image' => __( 'تصویر', 'vidiform' ), 'video' => __( 'ویدیو', 'vidiform' ), 'vidiform' => __( 'فرم ویدی‌فرم', 'vidiform' ) ) as $k => $label ) :
+							?>
+							<label class="vf-a-tab"><input type="radio" name="vf_blog[media_type]" value="<?php echo esc_attr( $k ); ?>"<?php checked( $media_type, $k ); ?>><span><?php echo esc_html( $label ); ?></span></label>
+						<?php endforeach; ?>
+					</div>
+					<p class="vf-a-tiny" data-type-note></p>
+
+					<?php
+					$slots = array(
+						'desktop' => array( __( 'مدیای دسکتاپ (موکاپ لپ‌تاپ)', 'vidiform' ), '۱۶۰۰×۱۰۰۰', 'vf-a-drop--desktop' ),
+						'mobile'  => array( __( 'مدیای موبایل (موکاپ گوشی)', 'vidiform' ), '۹:۱۹', 'vf-a-drop--mobile' ),
+					);
+					foreach ( $slots as $slot => $meta ) :
+						$att = (int) $o( 'media_' . $slot );
+						?>
+						<div class="vf-a-field vf-a-media-slot" data-slot="<?php echo esc_attr( $slot ); ?>">
+							<span><?php echo esc_html( $meta[0] ); ?></span>
+							<input type="hidden" name="vf_blog[media_<?php echo esc_attr( $slot ); ?>]" value="<?php echo esc_attr( $att ); ?>" data-media-id>
+							<button type="button" class="vf-a-drop <?php echo esc_attr( $meta[2] ); ?><?php echo $att ? ' has-media' : ''; ?>" data-media-pick aria-label="<?php echo esc_attr( $meta[0] ); ?>">
+								<span class="vf-a-drop__preview" data-media-preview><?php echo $thumb( $att ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in closure. ?></span>
+								<span class="vf-a-drop__empty">
+									<?php vf_the_icon( 'image', 30, array( 'stroke-width' => '1.5' ) ); ?>
+									<span class="vf-a-drop__size"><?php echo esc_html( $meta[1] ); ?></span>
+									<span><?php esc_html_e( 'انتخاب از کتابخانه‌ی رسانه یا', 'vidiform' ); ?> <u><?php esc_html_e( 'آپلود فایل', 'vidiform' ); ?></u></span>
+								</span>
+							</button>
+							<button type="button" class="vf-btn vf-btn--link vf-btn--xs" data-media-clear<?php echo $att ? '' : ' hidden'; ?>><?php esc_html_e( 'حذف فایل', 'vidiform' ); ?></button>
+							<input class="vf-a-input vf-ltr" type="text" name="vf_blog[media_<?php echo esc_attr( $slot ); ?>_url]" value="<?php echo esc_attr( $o( 'media_' . $slot . '_url' ) ); ?>" placeholder="<?php esc_attr_e( 'یا آدرس ویدیو / لینک ویدی‌فرم', 'vidiform' ); ?>" aria-label="<?php esc_attr_e( 'یا آدرس ویدیو / لینک ویدی‌فرم', 'vidiform' ); ?>">
+						</div>
+					<?php endforeach; ?>
+
+					<div class="vf-a-infobox">
+						<strong><?php esc_html_e( 'اندازه پیشنهادی:', 'vidiform' ); ?></strong>
+						<?php esc_html_e( 'دسکتاپ ۱۶۰۰×۱۰۰۰ (۱۶:۱۰) · موبایل ۹۰۰×۱۹۰۰ (۹:۱۹)', 'vidiform' ); ?><br>
+						<?php esc_html_e( 'ویدیو: MP4/WebM بی‌صدا که به‌صورت خودکار و تکراری پخش می‌شود. تصویرها با نسخه‌های ریسپانسیو (srcset) وردپرس سرو می‌شوند.', 'vidiform' ); ?>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<div class="vf-a-savebar"><button type="submit" class="vf-btn vf-btn--primary vf-btn--h44"><?php esc_html_e( 'ذخیره‌ی تنظیمات صفحه بلاگ', 'vidiform' ); ?></button></div>
+	</form>
+	<?php
+	vf_admin_close();
+}
+
+/**
+ * Media Library on the landing settings screen.
+ */
+function vf_blog_landing_media() {
+	if ( 'vf-blog-landing' === vf_admin_current_page() ) {
+		wp_enqueue_media();
+	}
+}
+add_action( 'admin_enqueue_scripts', 'vf_blog_landing_media' );

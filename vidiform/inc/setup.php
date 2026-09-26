@@ -175,6 +175,10 @@ add_filter( 'body_class', 'vf_body_class' );
  */
 function vf_theme_mode_script() {
 	$mode = vf_opt( 'general', 'theme_mode', 'system' );
+	// The Blog has its own default (set in «صفحه بلاگ»); visitors' own choice always wins.
+	if ( ! is_admin() && 'blog' === vf_section() ) {
+		$mode = vf_opt( 'blog', 'default_theme', $mode );
+	}
 	?>
 <script>(function(){try{var d=document.documentElement,s=localStorage.getItem('vf-theme'),m=<?php echo wp_json_encode( $mode ); ?>;var t=s||(m==='system'?(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):m);d.setAttribute('data-theme',t);}catch(e){}})();</script>
 	<?php
