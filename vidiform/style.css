@@ -1,0 +1,21 @@
+/*
+Theme Name:        VidiForm
+Theme URI:         https://vidiform.ir
+Author:            VidiForm
+Author URI:        https://vidiform.ir
+Description:       قالب رسمی ویدی‌فرم با دو سیستم مستقل: «مرکز راهنما» و «وبلاگ». شامل پنل مدیریت اختصاصی برای هر سیستم، حالت روشن و تیره، راست‌چین و آماده‌ی سئو.
+Version:           1.0.0
+Requires at least: 6.2
+Tested up to:      6.6
+Requires PHP:      7.4
+License:           GNU General Public License v2 or later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:       vidiform
+Domain Path:       /languages
+Tags:              rtl-language-support, blog, custom-menu, featured-images, threaded-comments, translation-ready, accessibility-ready
+*/
+
+/*
+ * All presentation lives in assets/css/*.css and is enqueued per section
+ * (base.css everywhere, help.css on Help Center routes, blog.css on Blog routes).
+ */

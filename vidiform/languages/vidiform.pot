@@ -1,0 +1,1078 @@
+# VidiForm theme translation template.
+msgid ""
+msgstr ""
+"Project-Id-Version: VidiForm 1.0.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"X-Domain: vidiform\n"
+
+#: inc/help-center/rest.php:504 inc/help-center/rest.php:721
+msgid "%s (کپی)"
+msgstr ""
+
+#: inc/helpers.php:142
+msgid "%s دقیقه"
+msgstr ""
+
+#: comments.php:19
+msgid "%s دیدگاه"
+msgstr ""
+
+#: inc/blog/template-tags.php:82
+msgid "%s مطالعه"
+msgstr ""
+
+#: search.php:33 help-search.php:35
+msgid "%s نتیجه"
+msgstr ""
+
+#: archive.php:38 author.php:31
+msgid "%s نوشته"
+msgstr ""
+
+#: inc/admin/blog-admin.php:171
+msgid "%s نوشته · جست‌وجو، فیلتر، مرتب‌سازی، ویژه‌کردن و ویرایش"
+msgstr ""
+
+#: inc/seo.php:96
+msgid "%s — مرکز راهنما"
+msgstr ""
+
+#: inc/admin/blog-admin.php:92 inc/admin/blog-admin.php:249
+msgid "(بدون عنوان)"
+msgstr ""
+
+#: inc/admin/blog-admin.php:347
+msgid "+ برچسب جدید"
+msgstr ""
+
+#: inc/admin/help-admin.php:123 inc/admin/blog-admin.php:347
+msgid "+ دسته‌ی جدید"
+msgstr ""
+
+#: inc/admin/blog-admin.php:442
+msgid "+ نویسنده‌ی جدید"
+msgstr ""
+
+#: footer-help.php:15
+msgid "© %s ویدی‌فرم — مرکز راهنما"
+msgstr ""
+
+#: footer-blog.php:34
+msgid "© %s ویدی‌فرم. همه‌ی حقوق محفوظ است."
+msgstr ""
+
+#: inc/admin/blog-admin.php:82
+msgid "آخرین تغییرات"
+msgstr ""
+
+#: inc/admin/blog-admin.php:133
+msgid "آخرین ویرایش"
+msgstr ""
+
+#: inc/admin/general-settings.php:36
+msgid "آدرس پنل ویدی‌فرم"
+msgstr ""
+
+#: inc/admin/help-admin.php:191 inc/admin/blog-admin.php:541
+msgid "آدرس‌ها"
+msgstr ""
+
+#: single-help_article.php:28
+msgid "آموزش و راهنما"
+msgstr ""
+
+#: inc/help-center/rest.php:390
+msgid "اجازه‌ی این کار را ندارید."
+msgstr ""
+
+#: inc/admin/help-admin.php:45 inc/admin/help-admin.php:77 inc/admin/help-admin.php:120
+msgid "اجازه‌ی دسترسی ندارید."
+msgstr ""
+
+#: inc/help-center/template-tags.php:228
+msgid "ادامه راهنما"
+msgstr ""
+
+#: comments.php:43
+msgid "ارسال دیدگاه"
+msgstr ""
+
+#: archive.php:68 taxonomy-help_category.php:81
+msgid "از دسته‌بندی‌های دیگر یا جست‌وجو استفاده کنید."
+msgstr ""
+
+#: inc/admin/general-settings.php:63
+msgid "استفاده از اعداد لاتین به‌جای اعداد فارسی"
+msgstr ""
+
+#: inc/help-center/template-tags.php:226
+msgid "استفاده از قالب"
+msgstr ""
+
+#: inc/blog/template-tags.php:187
+msgid "اشتراک در %s"
+msgstr ""
+
+#: inc/blog/template-tags.php:185
+msgid "اشتراک‌گذاری"
+msgstr ""
+
+#: inc/admin/blog-admin.php:202
+msgid "اعمال"
+msgstr ""
+
+#: inc/help-center/post-types.php:39
+msgid "افزودن راهنمای جدید"
+msgstr ""
+
+#: inc/admin/blog-metabox.php:62
+msgid "افزونه‌ی سئو فعال است؛ عنوان و توضیحات آن افزونه اولویت دارد."
+msgstr ""
+
+#: inc/admin/general-settings.php:70
+msgid "انتخاب از کتابخانه"
+msgstr ""
+
+#: inc/admin/shell.php:90
+msgid "انصراف"
+msgstr ""
+
+#: inc/admin/blog-metabox.php:47
+msgid "اگر انتخاب نشود، نوشته‌های هم‌دسته و هم‌برچسب نمایش داده می‌شوند."
+msgstr ""
+
+#: inc/admin/general-settings.php:31
+msgid "این تنظیمات بین مرکز راهنما و وبلاگ مشترک است. تنظیمات هر سیستم در منوی خودش قرار دارد."
+msgstr ""
+
+#: inc/admin/help-admin.php:159
+msgid "این تنظیمات فقط روی مرکز راهنما اثر دارند."
+msgstr ""
+
+#: inc/admin/blog-admin.php:502
+msgid "این تنظیمات فقط روی وبلاگ اثر دارند."
+msgstr ""
+
+#: help-404.php:16
+msgid "این راهنما پیدا نشد"
+msgstr ""
+
+#: 404.php:16
+msgid "این صفحه پیدا نشد"
+msgstr ""
+
+#: inc/admin/help-admin.php:131
+msgid "این متن‌ها هاردکد نیستند و از همین‌جا در صفحه‌ی عمومی راهنما نمایش داده می‌شوند."
+msgstr ""
+
+#: author.php:58
+msgid "این نویسنده هنوز نوشته‌ای منتشر نکرده است"
+msgstr ""
+
+#: inc/help-center/sections.php:329
+msgid "این ویدی‌فرم به‌صورت زنده داخل مطلب اجرا می‌شود."
+msgstr ""
+
+#: inc/blog/template-tags.php:180
+msgid "ایکس"
+msgstr ""
+
+#: inc/admin/help-admin.php:187
+msgid "بارگذاری ساختار پیش‌فرض"
+msgstr ""
+
+#: inc/setup.php:138
+msgid "بارگذاری ساختار پیش‌فرض مرکز راهنما"
+msgstr ""
+
+#: inc/help-center/template-tags.php:78
+msgid "باز و بسته کردن دسته"
+msgstr ""
+
+#: inc/help-center/sections.php:331
+msgid "باز کردن در صفحه‌ی جدید"
+msgstr ""
+
+#: inc/admin/general-settings.php:45
+msgid "بازدیدکننده‌ی ریشه‌ی سایت به این بخش هدایت می‌شود."
+msgstr ""
+
+#: inc/admin/help-admin.php:96
+msgid "بازگشت به راهنماها"
+msgstr ""
+
+#: taxonomy-help_category.php:82
+msgid "بازگشت به مرکز راهنما"
+msgstr ""
+
+#: 404.php:22 inc/blog/template-tags.php:242
+msgid "بازگشت به وبلاگ"
+msgstr ""
+
+#: header-help.php:32
+msgid "بازگشت به پنل ویدی‌فرم"
+msgstr ""
+
+#: single.php:55 inc/admin/shell.php:125 inc/admin/shell.php:239
+msgid "برچسب‌ها"
+msgstr ""
+
+#: inc/admin/blog-admin.php:346
+msgid "برچسب‌ها موضوعات جزئی‌تر را به هم وصل می‌کنند."
+msgstr ""
+
+#: inc/admin/blog-admin.php:345
+msgid "برچسب‌های وبلاگ"
+msgstr ""
+
+#: inc/admin/help-admin.php:215 inc/admin/blog-admin.php:300 inc/admin/blog-admin.php:407
+msgid "بستن"
+msgstr ""
+
+#: taxonomy-help_category.php:74 help-search.php:57 inc/admin/blog-admin.php:285
+msgid "بعدی"
+msgstr ""
+
+#: inc/setup.php:26
+msgid "بنفش تیره"
+msgstr ""
+
+#: inc/setup.php:25
+msgid "بنفش ویدی‌فرم"
+msgstr ""
+
+#: single-help_article.php:43
+msgid "به‌روزرسانی %s"
+msgstr ""
+
+#: help-home.php:31
+msgid "به‌زودی آموزش‌ها و پاسخ سؤال‌ها در این‌جا قرار می‌گیرند."
+msgstr ""
+
+#: home.php:60
+msgid "به‌زودی مقاله‌های تازه این‌جا منتشر می‌شوند."
+msgstr ""
+
+#: inc/admin/general-settings.php:60
+msgid "تاریخ و اعداد"
+msgstr ""
+
+#: home.php:48
+msgid "تازه‌ترین نوشته‌ها"
+msgstr ""
+
+#: inc/admin/blog-admin.php:222
+msgid "تصویر"
+msgstr ""
+
+#: inc/admin/general-settings.php:67
+msgid "تصویر پیش‌فرض اشتراک‌گذاری (OG)"
+msgstr ""
+
+#: inc/admin/help-admin.php:171
+msgid "تعداد راهنما در هر کارت صفحه‌ی اصلی"
+msgstr ""
+
+#: inc/admin/help-admin.php:177
+msgid "تعداد مطالب مرتبط"
+msgstr ""
+
+#: inc/admin/blog-admin.php:526
+msgid "تعداد نوشته در هر صفحه از %s تنظیم می‌شود."
+msgstr ""
+
+#: inc/admin/blog-admin.php:518
+msgid "تعداد نوشته‌های مرتبط"
+msgstr ""
+
+#: inc/admin/blog-admin.php:515
+msgid "تعداد نوشته‌های ویژه"
+msgstr ""
+
+#: header-help.php:26 header-blog.php:54
+msgid "تغییر حالت روشن و تیره"
+msgstr ""
+
+#: inc/admin/shell.php:92
+msgid "تغییرات ذخیره نشده‌اند."
+msgstr ""
+
+#: inc/blog/template-tags.php:178
+msgid "تلگرام"
+msgstr ""
+
+#: inc/admin/shell.php:113 inc/admin/shell.php:128 inc/admin/shell.php:231
+msgid "تنظیمات"
+msgstr ""
+
+#: inc/admin/blog-admin.php:527
+msgid "تنظیمات خواندن وردپرس"
+msgstr ""
+
+#: inc/admin/general-settings.php:15 inc/admin/general-settings.php:30
+msgid "تنظیمات عمومی ویدی‌فرم"
+msgstr ""
+
+#: inc/admin/shell.php:231 inc/admin/help-admin.php:159
+msgid "تنظیمات مرکز راهنما"
+msgstr ""
+
+#: inc/admin/shell.php:242 inc/admin/blog-admin.php:502
+msgid "تنظیمات وبلاگ"
+msgstr ""
+
+#: inc/admin/blog-admin.php:547
+msgid "تنظیمات پیوندهای یکتا"
+msgstr ""
+
+#: inc/admin/blog-admin.php:511
+msgid "توضیح"
+msgstr ""
+
+#: inc/admin/help-admin.php:136 inc/admin/help-admin.php:167
+msgid "توضیح صفحه"
+msgstr ""
+
+#: inc/admin/blog-metabox.php:59
+msgid "توضیحات متا"
+msgstr ""
+
+#: inc/admin/general-settings.php:54
+msgid "تیره"
+msgstr ""
+
+#: inc/admin/blog-admin.php:131
+msgid "جدیدترین"
+msgstr ""
+
+#: header-blog.php:51 inc/admin/blog-admin.php:360
+msgid "جست‌وجو"
+msgstr ""
+
+#: inc/assets.php:38
+msgid "جست‌وجو انجام نشد. دوباره تلاش کنید."
+msgstr ""
+
+#: inc/help-center/template-tags.php:165
+msgid "جست‌وجو در مرکز راهنما"
+msgstr ""
+
+#: inc/blog/template-tags.php:138
+msgid "جست‌وجو در مقاله‌ها…"
+msgstr ""
+
+#: search.php:21 inc/blog/template-tags.php:136
+msgid "جست‌وجو در وبلاگ"
+msgstr ""
+
+#: inc/seo.php:93
+msgid "جست‌وجوی «%s» در مرکز راهنما"
+msgstr ""
+
+#: inc/admin/help-admin.php:55 inc/help-center/post-types.php:42
+msgid "جست‌وجوی راهنما"
+msgstr ""
+
+#: inc/admin/help-admin.php:56
+msgid "جست‌وجوی راهنما…"
+msgstr ""
+
+#: inc/admin/blog-admin.php:178
+msgid "جست‌وجوی عنوان یا متن نوشته…"
+msgstr ""
+
+#: inc/admin/blog-admin.php:177
+msgid "جست‌وجوی نوشته"
+msgstr ""
+
+#: inc/admin/blog-admin.php:361
+msgid "جست‌وجو…"
+msgstr ""
+
+#: inc/admin/shell.php:180
+msgid "حالت روشن / تیره"
+msgstr ""
+
+#: inc/admin/general-settings.php:49
+msgid "حالت نمایش پیش‌فرض"
+msgstr ""
+
+#: inc/admin/shell.php:91 inc/admin/blog-admin.php:269 inc/admin/blog-admin.php:390
+msgid "حذف"
+msgstr ""
+
+#: inc/setup.php:78
+msgid "خانه"
+msgstr ""
+
+#: inc/admin/blog-admin.php:39
+msgid "خصوصی"
+msgstr ""
+
+#: inc/admin/shell.php:88
+msgid "خطا در انجام عملیات. دوباره تلاش کنید."
+msgstr ""
+
+#: inc/help-center/template-tags.php:196
+msgid "خواندن راهنمای کامل"
+msgstr ""
+
+#: inc/help-center/rest.php:561
+msgid "داده‌ی نامعتبر."
+msgstr ""
+
+#: inc/admin/blog-admin.php:37 inc/admin/blog-admin.php:58
+msgid "در انتظار بازبینی"
+msgstr ""
+
+#: archive.php:68
+msgid "در این بخش هنوز نوشته‌ای منتشر نشده است"
+msgstr ""
+
+#: inc/assets.php:39
+msgid "در حال جست‌وجو…"
+msgstr ""
+
+#: inc/admin/help-admin.php:86
+msgid "در حال ساخت راهنمای جدید…"
+msgstr ""
+
+#: inc/help-center/template-tags.php:214
+msgid "درباره این قالب"
+msgstr ""
+
+#: inc/blog/template-tags.php:202
+msgid "درباره‌ی نویسنده"
+msgstr ""
+
+#: inc/help-center/rest.php:635 inc/help-center/rest.php:676 inc/help-center/rest.php:717
+msgid "دسته پیدا نشد."
+msgstr ""
+
+#: inc/admin/blog-admin.php:547
+msgid "دسته، برچسب و نویسنده زیر همان پیشوند نوشته‌ها ساخته می‌شوند (مثلاً /blog/category/…)."
+msgstr ""
+
+#: inc/admin/blog-admin.php:180
+msgid "دسته‌بندی"
+msgstr ""
+
+#: taxonomy-help_category.php:22 inc/admin/shell.php:111 inc/admin/shell.php:229
+msgid "دسته‌بندی راهنما"
+msgstr ""
+
+#: inc/admin/help-admin.php:126
+msgid "دسته‌بندی مرکز راهنما"
+msgstr ""
+
+#: inc/admin/shell.php:124 inc/admin/shell.php:238 inc/admin/shell.php:238
+msgid "دسته‌بندی‌ها"
+msgstr ""
+
+#: inc/admin/blog-admin.php:346
+msgid "دسته‌بندی‌ها ساختار اصلی وبلاگ هستند و در منو و آدرس‌ها استفاده می‌شوند."
+msgstr ""
+
+#: inc/admin/help-admin.php:186
+msgid "دسته‌بندی‌ها، زیر‌دسته‌ها، راهنماها و کتابخانه‌ی ویژگی‌های پیش‌فرض ویدی‌فرم را اضافه می‌کند. موارد موجود تغییر نمی‌کنند."
+msgstr ""
+
+#: help-home.php:34
+msgid "دسته‌بندی‌های راهنما"
+msgstr ""
+
+#: inc/admin/blog-admin.php:345 inc/blog/template-tags.php:160
+msgid "دسته‌بندی‌های وبلاگ"
+msgstr ""
+
+#: inc/admin/help-admin.php:126
+msgid "دسته‌ی اصلی ← زیر‌دسته (اختیاری) ← راهنماها. ترتیب کارت‌ها با کشیدن تغییر می‌کند."
+msgstr ""
+
+#: inc/help-center/rest.php:604
+msgid "دسته‌ی جدید راهنما"
+msgstr ""
+
+#: inc/help-center/post-types.php:75
+msgid "دسته‌ی راهنما"
+msgstr ""
+
+#: inc/help-center/template-tags.php:167
+msgid "دنبال چه چیزی می‌گردید؟"
+msgstr ""
+
+#: comments.php:40
+msgid "دیدگاه خود را بنویسید"
+msgstr ""
+
+#: comments.php:33
+msgid "دیدگاه‌ها"
+msgstr ""
+
+#: inc/admin/help-admin.php:181 inc/admin/blog-admin.php:538
+msgid "ذخیره"
+msgstr ""
+
+#: inc/admin/shell.php:87
+msgid "ذخیره شد."
+msgstr ""
+
+#: inc/help-center/post-types.php:37
+msgid "راهنما"
+msgstr ""
+
+#: inc/admin/help-admin.php:174
+msgid "راهنما در هر صفحه‌ی دسته"
+msgstr ""
+
+#: inc/help-center/rest.php:387
+msgid "راهنما پیدا نشد."
+msgstr ""
+
+#: inc/admin/shell.php:110 inc/admin/shell.php:227 inc/admin/shell.php:227
+msgid "راهنماها"
+msgstr ""
+
+#: inc/admin/help-admin.php:51
+msgid "راهنماها را بین دسته‌ها بکشید تا هم دسته و هم ترتیبشان تغییر کند."
+msgstr ""
+
+#: inc/help-center/rest.php:361
+msgid "راهنمای بدون عنوان"
+msgstr ""
+
+#: inc/admin/shell.php:228 inc/admin/help-admin.php:48 inc/help-center/post-types.php:38
+msgid "راهنمای جدید"
+msgstr ""
+
+#: single-help_article.php:111
+msgid "راهنمای مرتبط پیدا نشد."
+msgstr ""
+
+#: inc/help-center/post-types.php:43
+msgid "راهنمایی پیدا نشد"
+msgstr ""
+
+#: single-help_article.php:111
+msgid "رایگان"
+msgstr ""
+
+#: inc/admin/shell.php:112 inc/admin/shell.php:127 inc/admin/shell.php:230
+msgid "رسانه"
+msgstr ""
+
+#: header-help.php:18 header-blog.php:18
+msgid "رفتن به محتوای اصلی"
+msgstr ""
+
+#: inc/admin/general-settings.php:53
+msgid "روشن"
+msgstr ""
+
+#: single-help_article.php:37 single-help_article.php:87 taxonomy-help_category.php:64
+msgid "زمان مطالعه %s"
+msgstr ""
+
+#: inc/admin/blog-metabox.php:50
+msgid "زمان مطالعه (دقیقه)"
+msgstr ""
+
+#: inc/admin/blog-admin.php:38 inc/admin/blog-admin.php:57
+msgid "زمان‌بندی‌شده"
+msgstr ""
+
+#: inc/help-center/rest.php:604
+msgid "زیر‌دسته جدید"
+msgstr ""
+
+#: inc/help-center/rest.php:600
+msgid "زیر‌دسته فقط زیر دسته‌ی اصلی ساخته می‌شود."
+msgstr ""
+
+#: archive.php:48 taxonomy-help_category.php:42
+msgid "زیر‌دسته‌ها"
+msgstr ""
+
+#: inc/admin/help-admin.php:185
+msgid "ساختار پیش‌فرض مرکز راهنما"
+msgstr ""
+
+#: inc/admin/general-settings.php:71
+msgid "شناسه‌ی پیوست تصویر؛ برای صفحه‌هایی که تصویر شاخص ندارند."
+msgstr ""
+
+#: inc/admin/blog-admin.php:288
+msgid "صفحه‌بندی"
+msgstr ""
+
+#: single.php:44
+msgid "صفحه‌های نوشته"
+msgstr ""
+
+#: inc/seo.php:102
+msgid "صفحه‌ی %s"
+msgstr ""
+
+#: inc/admin/help-admin.php:163
+msgid "صفحه‌ی اصلی"
+msgstr ""
+
+#: inc/admin/general-settings.php:41
+msgid "صفحه‌ی اصلی سایت"
+msgstr ""
+
+#: help-404.php:22 inc/admin/help-admin.php:130
+msgid "صفحه‌ی اصلی مرکز راهنما"
+msgstr ""
+
+#: inc/admin/blog-admin.php:507
+msgid "صفحه‌ی اصلی وبلاگ"
+msgstr ""
+
+#: inc/admin/blog-admin.php:531
+msgid "صفحه‌ی نوشته"
+msgstr ""
+
+#: inc/admin/blog-admin.php:479
+msgid "صفحه‌ی نویسنده"
+msgstr ""
+
+#: search.php:46
+msgid "عبارت دیگری را امتحان کنید یا از دسته‌بندی‌ها شروع کنید."
+msgstr ""
+
+#: help-search.php:64 inc/assets.php:41
+msgid "عبارت دیگری را امتحان کنید یا از دسته‌بندی‌های زیر شروع کنید."
+msgstr ""
+
+#: inc/admin/blog-admin.php:226 inc/admin/blog-admin.php:371 inc/admin/blog-admin.php:453
+msgid "عملیات"
+msgstr ""
+
+#: inc/admin/blog-admin.php:134 inc/admin/blog-admin.php:508
+msgid "عنوان"
+msgstr ""
+
+#: inc/help-center/rest.php:423
+msgid "عنوان راهنما را وارد کنید."
+msgstr ""
+
+#: inc/admin/blog-metabox.php:55
+msgid "عنوان سئو"
+msgstr ""
+
+#: inc/admin/help-admin.php:133 inc/admin/help-admin.php:164
+msgid "عنوان صفحه"
+msgstr ""
+
+#: inc/help-center/rest.php:755
+msgid "عنوان ویژگی را وارد کنید."
+msgstr ""
+
+#: inc/help-center/rest.php:659
+msgid "فایل انتخاب‌شده تصویر نیست."
+msgstr ""
+
+#: inc/admin/blog-admin.php:534
+msgid "فوتر"
+msgstr ""
+
+#: inc/admin/help-admin.php:58
+msgid "فیلتر وضعیت"
+msgstr ""
+
+#: inc/admin/blog-admin.php:294
+msgid "فیلتر یا عبارت جست‌وجو را تغییر دهید."
+msgstr ""
+
+#: inc/setup.php:137
+msgid "قالب ویدی‌فرم فعال شد. مرکز راهنما و وبلاگ هرکدام منوی مدیریت مستقل دارند."
+msgstr ""
+
+#: inc/help-center/sections.php:253
+msgid "قالب: %s"
+msgstr ""
+
+#: taxonomy-help_category.php:73 help-search.php:56 inc/admin/blog-admin.php:284
+msgid "قبلی"
+msgstr ""
+
+#: inc/admin/blog-admin.php:132
+msgid "قدیمی‌ترین"
+msgstr ""
+
+#: inc/assets.php:48
+msgid "لینک کپی شد."
+msgstr ""
+
+#: inc/blog/template-tags.php:181
+msgid "لینکدین"
+msgstr ""
+
+#: inc/setup.php:27
+msgid "متن"
+msgstr ""
+
+#: inc/setup.php:28
+msgid "متن ثانویه"
+msgstr ""
+
+#: inc/admin/blog-admin.php:535
+msgid "متن فوتر"
+msgstr ""
+
+#: inc/admin/blog-admin.php:192
+msgid "مرتب‌سازی"
+msgstr ""
+
+#: taxonomy-help_category.php:27 404.php:23 inc/admin/shell.php:107
+msgid "مرکز راهنما"
+msgstr ""
+
+#: inc/setup.php:38
+msgid "مرکز راهنما — منوی فوتر"
+msgstr ""
+
+#: header-help.php:23 inc/seo.php:90 inc/seo.php:233
+msgid "مرکز راهنمای ویدی‌فرم"
+msgstr ""
+
+#: inc/help-center/template-tags.php:139
+msgid "مسیر صفحه"
+msgstr ""
+
+#: help-search.php:65
+msgid "مشاهده دسته‌بندی‌ها"
+msgstr ""
+
+#: inc/help-center/post-types.php:41
+msgid "مشاهده راهنما"
+msgstr ""
+
+#: help-home.php:57
+msgid "مشاهده همه ←"
+msgstr ""
+
+#: inc/admin/shell.php:171
+msgid "مشاهده‌ی سایت"
+msgstr ""
+
+#: inc/admin/general-settings.php:52
+msgid "مطابق سیستم کاربر"
+msgstr ""
+
+#: single-help_article.php:79
+msgid "مطالب مرتبط"
+msgstr ""
+
+#: home.php:31
+msgid "مطالب ویژه"
+msgstr ""
+
+#: single-help_article.php:70
+msgid "مطلب بعدی"
+msgstr ""
+
+#: single-help_article.php:64
+msgid "مطلب قبلی"
+msgstr ""
+
+#: single-help_article.php:61
+msgid "مطلب قبلی و بعدی"
+msgstr ""
+
+#: inc/admin/shell.php:89
+msgid "مطمئن هستید؟"
+msgstr ""
+
+#: inc/admin/general-settings.php:38
+msgid "مقصد دکمه‌ی «بازگشت به پنل ویدی‌فرم» و «ورود به ویدی‌فرم»."
+msgstr ""
+
+#: help-404.php:17
+msgid "ممکن است آدرس تغییر کرده یا راهنما حذف شده باشد. جست‌وجو کنید یا به صفحه‌ی اصلی مرکز راهنما برگردید."
+msgstr ""
+
+#: 404.php:17
+msgid "ممکن است آدرس تغییر کرده یا صفحه حذف شده باشد."
+msgstr ""
+
+#: inc/admin/help-admin.php:60 inc/admin/blog-admin.php:35 inc/admin/blog-admin.php:55
+msgid "منتشرشده"
+msgstr ""
+
+#: header-blog.php:59 inc/admin/shell.php:151
+msgid "منو"
+msgstr ""
+
+#: footer-help.php:24 footer-blog.php:24
+msgid "منوی فوتر"
+msgstr ""
+
+#: header-blog.php:26
+msgid "منوی وبلاگ"
+msgstr ""
+
+#: inc/admin/blog-admin.php:400
+msgid "موردی پیدا نشد"
+msgstr ""
+
+#: inc/admin/blog-admin.php:368
+msgid "نام"
+msgstr ""
+
+#: inc/admin/blog-admin.php:369
+msgid "نامک"
+msgstr ""
+
+#: inc/assets.php:37 inc/blog/template-tags.php:118 inc/help-center/template-tags.php:127
+msgid "نتایج جست‌وجو"
+msgstr ""
+
+#: search.php:21 help-search.php:20
+msgid "نتایج جست‌وجو برای «%s»"
+msgstr ""
+
+#: inc/admin/blog-admin.php:451
+msgid "نقش"
+msgstr ""
+
+#: inc/admin/blog-admin.php:267 inc/admin/blog-admin.php:388
+msgid "نمای کاربر"
+msgstr ""
+
+#: inc/admin/shell.php:122 inc/admin/shell.php:235
+msgid "نمای کلی"
+msgstr ""
+
+#: inc/admin/shell.php:235 inc/admin/blog-admin.php:71
+msgid "نمای کلی وبلاگ"
+msgstr ""
+
+#: inc/admin/general-settings.php:62
+msgid "نمایش تاریخ شمسی"
+msgstr ""
+
+#: inc/admin/blog-admin.php:532
+msgid "نمایش دکمه‌های اشتراک‌گذاری"
+msgstr ""
+
+#: inc/admin/blog-admin.php:533
+msgid "نمایش کادر نویسنده"
+msgstr ""
+
+#: inc/admin/blog-admin.php:223
+msgid "نوشته"
+msgstr ""
+
+#: inc/admin/blog-admin.php:293
+msgid "نوشته‌ای با این شرایط پیدا نشد"
+msgstr ""
+
+#: inc/admin/shell.php:123 inc/admin/shell.php:236 inc/admin/shell.php:236
+msgid "نوشته‌ها"
+msgstr ""
+
+#: author.php:45
+msgid "نوشته‌های %s"
+msgstr ""
+
+#: single.php:98
+msgid "نوشته‌های مرتبط"
+msgstr ""
+
+#: inc/admin/blog-metabox.php:41
+msgid "نوشته‌های مرتبط (اختیاری)"
+msgstr ""
+
+#: inc/admin/blog-admin.php:452
+msgid "نوشته‌های منتشرشده"
+msgstr ""
+
+#: single.php:85
+msgid "نوشته‌ی بعدی"
+msgstr ""
+
+#: inc/admin/shell.php:237 inc/admin/shell.php:237 inc/admin/blog-admin.php:53
+msgid "نوشته‌ی جدید"
+msgstr ""
+
+#: single.php:79
+msgid "نوشته‌ی قبلی"
+msgstr ""
+
+#: single.php:76
+msgid "نوشته‌ی قبلی و بعدی"
+msgstr ""
+
+#: inc/admin/blog-admin.php:260
+msgid "نوشته‌ی ویژه"
+msgstr ""
+
+#: inc/admin/blog-metabox.php:38
+msgid "نوشته‌ی ویژه (نمایش در صفحه‌ی اصلی وبلاگ)"
+msgstr ""
+
+#: inc/admin/blog-admin.php:450 inc/blog/template-tags.php:205
+msgid "نویسنده"
+msgstr ""
+
+#: inc/admin/shell.php:126 inc/admin/shell.php:240 inc/admin/shell.php:240
+msgid "نویسندگان"
+msgstr ""
+
+#: single-help_article.php:111
+msgid "نیازمند اشتراک"
+msgstr ""
+
+#: taxonomy-help_category.php:43 inc/admin/help-admin.php:59 inc/admin/blog-admin.php:206
+msgid "همه"
+msgstr ""
+
+#: inc/admin/blog-admin.php:183
+msgid "همه‌ی دسته‌ها"
+msgstr ""
+
+#: inc/help-center/post-types.php:44
+msgid "همه‌ی راهنماها"
+msgstr ""
+
+#: inc/admin/blog-admin.php:83
+msgid "همه‌ی نوشته‌ها"
+msgstr ""
+
+#: help-home.php:30
+msgid "هنوز دسته‌بندی‌ای منتشر نشده است"
+msgstr ""
+
+#: taxonomy-help_category.php:80
+msgid "هنوز راهنمایی در این دسته منتشر نشده است"
+msgstr ""
+
+#: inc/admin/blog-admin.php:400
+msgid "هنوز موردی ساخته نشده است"
+msgstr ""
+
+#: inc/admin/blog-admin.php:104
+msgid "هنوز نوشته‌ای ساخته نشده است"
+msgstr ""
+
+#: home.php:60
+msgid "هنوز نوشته‌ای منتشر نشده است"
+msgstr ""
+
+#: inc/blog/template-tags.php:179
+msgid "واتس‌اپ"
+msgstr ""
+
+#: inc/setup.php:64 inc/admin/shell.php:119 inc/admin/shell.php:234
+msgid "وبلاگ"
+msgstr ""
+
+#: header-blog.php:23 footer-blog.php:15
+msgid "وبلاگ ویدی‌فرم"
+msgstr ""
+
+#: inc/setup.php:36
+msgid "وبلاگ — منوی اصلی"
+msgstr ""
+
+#: inc/setup.php:37
+msgid "وبلاگ — منوی فوتر"
+msgstr ""
+
+#: header-blog.php:58
+msgid "ورود به ویدی‌فرم"
+msgstr ""
+
+#: inc/admin/blog-admin.php:224
+msgid "وضعیت"
+msgstr ""
+
+#: inc/admin/blog-admin.php:71
+msgid "وضعیت نوشته‌ها و آخرین تغییرات وبلاگ."
+msgstr ""
+
+#: inc/admin/general-settings.php:15 inc/help-center/sections.php:320 inc/help-center/sections.php:328
+msgid "ویدی‌فرم"
+msgstr ""
+
+#: inc/admin/blog-metabox.php:15
+msgid "ویدی‌فرم — تنظیمات نوشته"
+msgstr ""
+
+#: inc/roles.php:58
+msgid "ویراستار مرکز راهنما"
+msgstr ""
+
+#: inc/admin/blog-admin.php:97 inc/admin/blog-admin.php:265 inc/admin/blog-admin.php:387
+msgid "ویرایش"
+msgstr ""
+
+#: inc/admin/shell.php:228 inc/help-center/post-types.php:40
+msgid "ویرایش راهنما"
+msgstr ""
+
+#: inc/admin/blog-admin.php:477
+msgid "ویرایش پروفایل"
+msgstr ""
+
+#: inc/admin/blog-admin.php:215 inc/admin/blog-admin.php:225
+msgid "ویژه"
+msgstr ""
+
+#: inc/help-center/post-types.php:91
+msgid "ویژگی"
+msgstr ""
+
+#: inc/help-center/post-types.php:90
+msgid "ویژگی‌ها"
+msgstr ""
+
+#: inc/setup.php:29
+msgid "پس‌زمینه‌ی برند"
+msgstr ""
+
+#: header-help.php:33
+msgid "پنل"
+msgstr ""
+
+#: inc/admin/shell.php:148
+msgid "پنل مدیریت"
+msgstr ""
+
+#: inc/admin/shell.php:175
+msgid "پیشخوان وردپرس"
+msgstr ""
+
+#: inc/help-center/template-tags.php:205 inc/help-center/template-tags.php:221
+msgid "پیش‌نمایش قالب"
+msgstr ""
+
+#: inc/help-center/template-tags.php:218
+msgid "پیش‌نمایش کنوس"
+msgstr ""
+
+#: inc/admin/help-admin.php:61 inc/admin/blog-admin.php:36 inc/admin/blog-admin.php:56
+msgid "پیش‌نویس"
+msgstr ""
+
+#: search.php:46 index.php:26 help-search.php:63
+msgid "چیزی پیدا نشد"
+msgstr ""
+
+#: inc/admin/general-settings.php:56
+msgid "کاربران همیشه می‌توانند با دکمه‌ی ماه/خورشید حالت را عوض کنند."
+msgstr ""
+
+#: inc/admin/blog-admin.php:446
+msgid "کاربرانی که می‌توانند در وبلاگ بنویسند. زندگی‌نامه و تصویر از پروفایل کاربر در صفحه‌ی نویسنده نمایش داده می‌شود."
+msgstr ""
+
+#: inc/blog/template-tags.php:189
+msgid "کپی لینک"
+msgstr ""
+
+#: inc/admin/blog-metabox.php:52
+msgid "۰ = محاسبه‌ی خودکار"
+msgstr ""

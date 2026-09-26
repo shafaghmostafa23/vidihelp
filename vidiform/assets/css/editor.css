@@ -1,0 +1,15 @@
+/* Block editor styles for Blog posts — matches the public post typography. */
+.editor-styles-wrapper {
+	font-family: 'Vazirmatn', system-ui, sans-serif;
+	color: #3B3556;
+	font-size: 15px;
+	line-height: 2.25;
+	direction: rtl;
+}
+.editor-styles-wrapper .editor-post-title__input,
+.editor-styles-wrapper .wp-block-post-title { font-family: 'Vazirmatn', system-ui, sans-serif; font-weight: 800; color: #1B1630; line-height: 1.55; }
+.editor-styles-wrapper h2 { font-size: 21px; font-weight: 800; color: #1B1630; }
+.editor-styles-wrapper h3 { font-size: 18px; font-weight: 800; color: #1B1630; }
+.editor-styles-wrapper a { color: #7132F5; font-weight: 700; }
+.editor-styles-wrapper blockquote { padding: 15px 18px; border-radius: 14px; background: #F9F6FF; border: 1.5px solid #E3D8FC; color: #4A2394; font-weight: 600; }
+.editor-styles-wrapper img { border-radius: 16px; }
