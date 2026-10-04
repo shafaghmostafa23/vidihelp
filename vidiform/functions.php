@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'VF_VERSION', '1.1.0' );
+define( 'VF_VERSION', '1.2.0' );
 define( 'VF_DIR', get_template_directory() );
 define( 'VF_URI', get_template_directory_uri() );
 
