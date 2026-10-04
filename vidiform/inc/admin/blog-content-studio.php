@@ -357,12 +357,20 @@ function vf_blog_content_page() {
 		.vf-a-cs-formstack{display:grid;gap:9px}
 		.vf-a-cs-formstack textarea{width:100%;min-height:64px}
 		.vf-a-cs-kpis{display:grid;grid-template-columns:repeat(3,minmax(130px,1fr));gap:12px;margin-bottom:16px}
+		.vf-a-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+		.vf-a-calendar__weekday{text-align:center;color:var(--vf-muted);font-size:11px;font-weight:800;padding:6px}
+		.vf-a-calendar__day{min-height:112px;padding:8px;border:1px solid var(--vf-border);border-radius:11px;background:var(--vf-surface-2);overflow:hidden}
+		.vf-a-calendar__day.is-outside{opacity:.48}
+		.vf-a-calendar__date{font-weight:800;color:var(--vf-text-3);font-size:12px}
+		.vf-a-calendar__event{display:flex;flex-direction:column;gap:2px;margin-top:6px;padding:5px 6px;border-radius:7px;background:var(--vf-tint-2);color:var(--vf-primary-ink)!important;font-size:10px;line-height:1.5;overflow:hidden}
+		.vf-a-calendar__event span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+		.vf-a-calendar__event small{color:var(--vf-muted);font-size:9px}
 		.vf-a-cs-kpi{padding:14px;border:1.5px solid var(--vf-border);border-radius:14px;background:var(--vf-surface)}
 		.vf-a-cs-kpi span{display:block;color:var(--vf-muted);font-size:12px}
 		.vf-a-cs-kpi strong{display:block;font-size:23px;margin-top:4px}
 		.vf-a-cs-note{color:var(--vf-muted);font-size:12px;line-height:1.9}
 		@media(max-width:950px){.vf-a-cs-grid{grid-template-columns:1fr}}
-		@media(max-width:600px){.vf-a-cs-kpis{grid-template-columns:1fr 1fr}}
+		@media(max-width:600px){.vf-a-cs-kpis{grid-template-columns:1fr 1fr}.vf-a-calendar{gap:3px}.vf-a-calendar__day{min-height:75px;padding:4px}.vf-a-calendar__event{font-size:9px;padding:3px}.vf-a-calendar__weekday{font-size:9px;padding:2px}}
 	</style>
 	<?php
 	vf_admin_close();
@@ -441,7 +449,55 @@ function vf_blog_content_calendar_screen() {
 	$table = vf_blog_content_table();
 	$items = $wpdb->get_results( "SELECT * FROM {$table} WHERE post_id > 0 OR status = 'planned' ORDER BY COALESCE(target_date, '9999-12-31') ASC, updated_at DESC" );
 	$posts = get_posts( array( 'post_type' => 'post', 'post_status' => array( 'draft', 'pending', 'future', 'publish' ), 'numberposts' => 30, 'orderby' => 'modified', 'order' => 'DESC' ) );
+	$month_value = isset( $_GET['month'] ) ? sanitize_text_field( wp_unslash( $_GET['month'] ) ) : '';
+	$month_start = preg_match( '/^\\d{4}-\\d{2}$/', $month_value ) ? DateTimeImmutable::createFromFormat( '!Y-m-d', $month_value . '-01', wp_timezone() ) : false;
+	if ( ! $month_start ) {
+		$month_start = new DateTimeImmutable( 'first day of this month', wp_timezone() );
+	}
+	$month_value = $month_start->format( 'Y-m' );
+	$offset      = ( (int) $month_start->format( 'N' ) + 1 ) % 7; // Saturday-first Persian calendar.
+	$grid_start  = $month_start->modify( '-' . $offset . ' days' );
+	$month_posts = get_posts( array(
+		'post_type'   => 'post',
+		'post_status' => array( 'draft', 'pending', 'future', 'publish' ),
+		'numberposts' => -1,
+		'date_query'  => array( array( 'year' => (int) $month_start->format( 'Y' ), 'monthnum' => (int) $month_start->format( 'n' ) ) ),
+	) );
+	$events = array();
+	$linked = array();
+	foreach ( $month_posts as $month_post ) {
+		$day = get_post_time( 'Y-m-d', false, $month_post );
+		$events[ $day ][] = array( 'post' => $month_post, 'title' => get_the_title( $month_post ) ?: __( '(بدون عنوان)', 'vidiform' ), 'status' => vf_blog_status( $month_post->post_status ), 'url' => get_edit_post_link( $month_post->ID ) );
+		$linked[ (int) $month_post->ID ] = true;
+	}
+	foreach ( $items as $planned ) {
+		if ( ! $planned->target_date ) {
+			continue;
+		}
+		$planned_post = $planned->post_id ? get_post( (int) $planned->post_id ) : null;
+		if ( $planned_post && isset( $linked[ (int) $planned_post->ID ] ) ) {
+			continue;
+		}
+		$events[ $planned->target_date ][] = array( 'post' => $planned_post, 'title' => $planned_post ? get_the_title( $planned_post ) : $planned->keyword, 'status' => $planned_post ? vf_blog_status( $planned_post->post_status ) : array( __( 'در برنامه', 'vidiform' ), '' ), 'url' => $planned_post ? get_edit_post_link( $planned_post->ID ) : '' );
+	}
+	$previous_month = $month_start->modify( '-1 month' )->format( 'Y-m' );
+	$next_month     = $month_start->modify( '+1 month' )->format( 'Y-m' );
 	?>
+	<section class="vf-a-cs-box vf-a-calendar-wrap">
+		<div class="vf-a-card__row"><h2 class="vf-a-card__title vf-grow"><?php echo esc_html( wp_date( 'F Y', $month_start->getTimestamp(), wp_timezone() ) ); ?></h2><div class="vf-a-cs-row"><a class="vf-btn vf-btn--secondary vf-btn--xs" href="<?php echo esc_url( add_query_arg( array( 'page' => 'vf-blog-content', 'tab' => 'calendar', 'month' => $previous_month ), admin_url( 'admin.php' ) ) ); ?>">→ <?php esc_html_e( 'ماه قبل', 'vidiform' ); ?></a><a class="vf-btn vf-btn--secondary vf-btn--xs" href="<?php echo esc_url( add_query_arg( array( 'page' => 'vf-blog-content', 'tab' => 'calendar', 'month' => $next_month ), admin_url( 'admin.php' ) ) ); ?>"><?php esc_html_e( 'ماه بعد', 'vidiform' ); ?> ←</a></div></div>
+		<div class="vf-a-calendar">
+			<?php foreach ( array( __( 'شنبه', 'vidiform' ), __( 'یکشنبه', 'vidiform' ), __( 'دوشنبه', 'vidiform' ), __( 'سه‌شنبه', 'vidiform' ), __( 'چهارشنبه', 'vidiform' ), __( 'پنجشنبه', 'vidiform' ), __( 'جمعه', 'vidiform' ) ) as $weekday ) : ?><div class="vf-a-calendar__weekday"><?php echo esc_html( $weekday ); ?></div><?php endforeach; ?>
+			<?php for ( $day_index = 0; $day_index < 42; $day_index++ ) : $cell = $grid_start->modify( '+' . $day_index . ' days' ); $cell_key = $cell->format( 'Y-m-d' ); $in_month = $cell->format( 'Y-m' ) === $month_value; ?>
+				<div class="vf-a-calendar__day<?php echo $in_month ? '' : ' is-outside'; ?>">
+					<span class="vf-a-calendar__date"><?php echo esc_html( vf_num( (int) $cell->format( 'j' ) ) ); ?></span>
+					<?php foreach ( array_slice( $events[ $cell_key ] ?? array(), 0, 3 ) as $event ) : ?>
+						<a class="vf-a-calendar__event" href="<?php echo esc_url( $event['url'] ? $event['url'] : add_query_arg( array( 'page' => 'vf-blog-content', 'tab' => 'keywords' ), admin_url( 'admin.php' ) ) ); ?>" title="<?php echo esc_attr( $event['title'] ); ?>"><span><?php echo esc_html( $event['title'] ); ?></span><small><?php echo esc_html( $event['status'][0] ); ?></small></a>
+					<?php endforeach; ?>
+					<?php if ( count( $events[ $cell_key ] ?? array() ) > 3 ) : ?><span class="vf-a-tiny">+<?php echo esc_html( vf_num( count( $events[ $cell_key ] ) - 3 ) ); ?></span><?php endif; ?>
+				</div>
+			<?php endfor; ?>
+		</div>
+	</section>
 	<div class="vf-a-cs-kpis">
 		<div class="vf-a-cs-kpi"><span><?php esc_html_e( 'محتوای برنامه‌ریزی‌شده', 'vidiform' ); ?></span><strong><?php echo esc_html( vf_num( count( $items ) ) ); ?></strong></div>
 		<div class="vf-a-cs-kpi"><span><?php esc_html_e( 'نوشته‌های وردپرس', 'vidiform' ); ?></span><strong><?php echo esc_html( vf_num( count( $posts ) ) ); ?></strong></div>
