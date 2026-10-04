@@ -21,6 +21,7 @@ function vf_admin_pages() {
 		'vf-help-settings' => 'help',
 		'vf-blog'          => 'blog',
 		'vf-blog-posts'    => 'blog',
+		'vf-blog-content'  => 'blog',
 		'vf-blog-cats'     => 'blog',
 		'vf-blog-tags'     => 'blog',
 		'vf-blog-authors'  => 'blog',
@@ -122,6 +123,7 @@ function vf_admin_nav( $system ) {
 		'items' => array(
 			array( 'vf-blog', __( 'نمای کلی', 'vidiform' ), 'grid', 'edit_posts', array() ),
 			array( 'vf-blog-posts', __( 'نوشته‌ها', 'vidiform' ), 'list', 'edit_posts', array() ),
+			array( 'vf-blog-content', __( 'استودیو محتوا', 'vidiform' ), 'templates', 'edit_posts', array() ),
 			array( 'vf-blog-landing', __( 'صفحه بلاگ', 'vidiform' ), 'home', 'manage_categories', array() ),
 			array( 'vf-blog-cats', __( 'دسته‌بندی‌ها', 'vidiform' ), 'folder', 'manage_categories', array() ),
 			array( 'vf-blog-tags', __( 'برچسب‌ها', 'vidiform' ), 'tag', 'manage_categories', array() ),
@@ -236,6 +238,7 @@ function vf_admin_menus() {
 	add_menu_page( __( 'وبلاگ', 'vidiform' ), __( 'وبلاگ', 'vidiform' ), 'edit_posts', 'vf-blog', 'vf_blog_page_dashboard', 'dashicons-welcome-write-blog', 26 );
 	add_submenu_page( 'vf-blog', __( 'نمای کلی وبلاگ', 'vidiform' ), __( 'نمای کلی', 'vidiform' ), 'edit_posts', 'vf-blog', 'vf_blog_page_dashboard' );
 	add_submenu_page( 'vf-blog', __( 'نوشته‌ها', 'vidiform' ), __( 'نوشته‌ها', 'vidiform' ), 'edit_posts', 'vf-blog-posts', 'vf_blog_page_posts' );
+	add_submenu_page( 'vf-blog', __( 'استودیو محتوا', 'vidiform' ), __( 'استودیو محتوا', 'vidiform' ), 'edit_posts', 'vf-blog-content', 'vf_blog_content_page' );
 	add_submenu_page( 'vf-blog', __( 'نوشته‌ی جدید', 'vidiform' ), __( 'نوشته‌ی جدید', 'vidiform' ), 'edit_posts', 'post-new.php' );
 	add_submenu_page( 'vf-blog', __( 'تنظیمات صفحه بلاگ', 'vidiform' ), __( 'صفحه بلاگ', 'vidiform' ), 'manage_categories', 'vf-blog-landing', 'vf_blog_page_landing' );
 	add_submenu_page( 'vf-blog', __( 'دسته‌بندی‌ها', 'vidiform' ), __( 'دسته‌بندی‌ها', 'vidiform' ), 'manage_categories', 'vf-blog-cats', 'vf_blog_page_cats' );

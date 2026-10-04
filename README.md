@@ -44,6 +44,12 @@ Blog
 
 ## Changelog
 
+### 1.2.0
+- Added **Blog → استودیو محتوا** inside the existing VidiForm admin shell, matching its RTL layout, sidebar, cards, fields, and light/dark tokens.
+- Added web keyword research through Tavily with Persian AI analysis and source links, manual keyword planning, and API settings.
+- Added AI-assisted WordPress draft creation, a month calendar for planned and existing posts, draft/published status visibility, and manual publishing.
+- Search Console and Analytics are not part of this first implementation; analytics values are not fabricated.
+
 ### 1.1.0
 - **Blog landing (`/blog/`)** rebuilt to the VidiForm Content Hub reference: header, hero (eyebrow, title, description, two buttons, laptop + phone media), category pills, featured article, latest-articles tiles, pagination, CTA band, 4-column footer; dark (default) and light palettes; responsive.
 - **Blog admin → صفحه بلاگ**: every landing text, link, media item and list option is editable (Settings API, `vf_blog` option). Blog → تنظیمات gained header button, newsletter URL and related-posts count.
