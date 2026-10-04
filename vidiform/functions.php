@@ -41,6 +41,7 @@ $vf_includes = array(
 	'inc/admin/shell.php',
 	'inc/admin/help-admin.php',
 	'inc/admin/blog-admin.php',
+	'inc/admin/blog-content-studio.php',
 	'inc/admin/blog-metabox.php',
 	'inc/admin/general-settings.php',
 );
