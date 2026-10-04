@@ -469,9 +469,18 @@ function vf_blog_content_calendar_screen() {
 		'numberposts' => -1,
 		'date_query'  => array( array( 'year' => (int) $month_start->format( 'Y' ), 'monthnum' => (int) $month_start->format( 'n' ) ) ),
 	) );
-	$events = array();
-	$linked = array();
+	$events        = array();
+	$linked        = array();
+	$planned_dates = array();
+	foreach ( $items as $planned ) {
+		if ( $planned->post_id && $planned->target_date ) {
+			$planned_dates[ (int) $planned->post_id ] = $planned->target_date;
+		}
+	}
 	foreach ( $month_posts as $month_post ) {
+		if ( isset( $planned_dates[ (int) $month_post->ID ] ) ) {
+			continue; // Show scheduled drafts on their editorial due date, not their creation date.
+		}
 		$day = get_post_time( 'Y-m-d', false, $month_post );
 		$events[ $day ][] = array( 'post' => $month_post, 'title' => get_the_title( $month_post ) ?: __( '(بدون عنوان)', 'vidiform' ), 'status' => vf_blog_status( $month_post->post_status ), 'url' => get_edit_post_link( $month_post->ID ) );
 		$linked[ (int) $month_post->ID ] = true;
