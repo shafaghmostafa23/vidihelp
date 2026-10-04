@@ -44,6 +44,16 @@ Blog
 
 ## Changelog
 
+### 1.3.0 (Content Studio editorial foundations)
+- Added a private, editable persona record with evidence notes and explicit hypothesis / reviewing / verified / retired states.
+- Added expandable internal taxonomies for content type, audience journey, SEO phase, and topic cluster. These labels do not register public archive routes; WordPress blog categories remain separate.
+- Added an editorial brief and pre-publication checklist to each blog post, plus a live visible-text character count and an image brief marker in the editor.
+- Added a Content Studio overview and keyword volume provenance fields for source and date. Tavily results remain distinct from search volume.
+- Added server-side AI request usage logs for provider/model/operation, returned token counts, context id, status, and duration. Cost stays explicitly unknown when the API returns no applicable price data; no price is assumed.
+- Kept the configured Tavily/OpenAI-compatible keys, endpoint, and model in place; keys are no longer returned in the settings page markup, and this phase does not expose provider/model editing.
+- The existing content-plan table is upgraded with `dbDelta`; existing keywords, plans, posts, public routes, and SEO metadata are retained. New labels and persona data are additive.
+- Search Console, GA4, and Bing data imports, cost pricing configuration, saved prompt version history, source-aware cost rollups, checklist of external technical SEO checks, and automatic status transitions are not connected or complete in this phase. Workflow labels are editable in WordPress but do not change core WordPress publish permissions.
+
 ### 1.2.0
 - Added **Blog → استودیو محتوا** inside the existing VidiForm admin shell, matching its RTL layout, sidebar, cards, fields, and light/dark tokens.
 - Added web keyword research through Tavily with Persian AI analysis and source links, manual keyword planning, and API settings.
