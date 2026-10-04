@@ -78,6 +78,9 @@ function vf_blog_content_verify( $action ) {
 
 function vf_blog_content_save_settings() {
 	vf_blog_content_verify( 'vf_blog_content_settings' );
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( esc_html__( 'فقط مدیر سایت می‌تواند کلیدهای API را تغییر دهد.', 'vidiform' ) );
+	}
 	$endpoint = isset( $_POST['endpoint'] ) ? esc_url_raw( trim( wp_unslash( $_POST['endpoint'] ) ) ) : '';
 	if ( ! $endpoint || 'https' !== wp_parse_url( $endpoint, PHP_URL_SCHEME ) ) {
 		vf_blog_content_redirect( 'settings', __( 'نشانی API باید یک URL معتبر HTTPS باشد.', 'vidiform' ), true );
@@ -316,6 +319,9 @@ function vf_blog_content_page() {
 	if ( ! isset( $tabs[ $tab ] ) ) {
 		$tab = 'keywords';
 	}
+	if ( 'settings' === $tab && ! current_user_can( 'manage_options' ) ) {
+		wp_die( esc_html__( 'فقط مدیر سایت می‌تواند تنظیمات اتصال را ببیند.', 'vidiform' ) );
+	}
 	vf_admin_open( 'blog' );
 	?>
 	<div class="vf-a-page vf-a-page--wide" data-screen="blog-content-studio">
@@ -326,7 +332,7 @@ function vf_blog_content_page() {
 			<div class="vf-a-infobox<?php echo ! empty( $_GET['vf_error'] ) ? ' vf-a-infobox--error' : ''; ?>" role="status"><?php echo esc_html( rawurldecode( sanitize_text_field( wp_unslash( $_GET['vf_content'] ) ) ) ); ?></div>
 		<?php endif; ?>
 		<nav class="vf-a-chips vf-a-tabs-content" aria-label="<?php esc_attr_e( 'بخش‌های استودیو', 'vidiform' ); ?>">
-			<?php foreach ( $tabs as $key => $label ) : ?>
+			<?php foreach ( $tabs as $key => $label ) : if ( 'settings' === $key && ! current_user_can( 'manage_options' ) ) { continue; } ?>
 				<a class="vf-a-chip<?php echo $tab === $key ? ' is-active' : ''; ?>" href="<?php echo esc_url( add_query_arg( array( 'page' => 'vf-blog-content', 'tab' => $key ), admin_url( 'admin.php' ) ) ); ?>"><?php echo esc_html( $label ); ?></a>
 			<?php endforeach; ?>
 		</nav>
